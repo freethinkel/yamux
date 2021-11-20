@@ -1,4 +1,4 @@
-import type { LandingBlockType, Track, TrackItem } from "./types";
+import type { Artist, LandingBlockType, Track, TrackItem } from "./types";
 // import type { LandingBlockEntity } from "./blockentity";
 // import type { Promotion } from "./promotion";
 // import type { ChartItem } from "./chartitem";
@@ -8,35 +8,65 @@ import type { GeneratedPlayListItem } from "./feed";
 import type { Album } from "./album";
 import type { PlayList } from "./playlist";
 
-export type LandingBlock = {
+type LandingBlockBase<T, E> = {
   id: string;
   title: string;
-  type:
-    | "personal-playlists"
-    | "podcasts"
-    | "play-context"
-    | "chart"
-    | "new-playlists"
-    | "new-releases"
-    | "promotions"
-    | string;
+  type: T;
   /**
    * Where block was got from
    */
   typeForFrom: LandingBlockType;
   description: string | undefined;
-  entities: Array<
-    | LandingBlockEntity<
-        | Promotion
-        | Album
-        | PlayList
-        | ChartItem
-        | MixLink
-        | GeneratedPlayListItem
-      >
-    | PodcastItem
-  >;
+  entities: E[];
 };
+
+// | "personal-playlists"
+//     | "podcasts"
+//     | "play-context"
+//     | "chart"
+//     | "new-playlists"
+//     | "new-releases"
+//     | "promotions"
+//     | string;
+
+// entities: Array<
+//     | LandingBlockEntity<
+//         | Promotion
+//         | Album
+//         | PlayList
+//         | ChartItem
+//         | MixLink
+//         | GeneratedPlayListItem
+//       >
+//     | PodcastItem
+//   >;
+
+type PlayContext<T, P> = {
+  client: "web";
+  context: T;
+  contextItem: number;
+  payload: P;
+};
+
+export type LandingBlock =
+  | LandingBlockBase<"podcasts", PodcastItem>
+  | LandingBlockBase<"chart", LandingBlockEntity<ChartItem>>
+  | LandingBlockBase<"new-releases", LandingBlockEntity<Album>>
+  | LandingBlockBase<"promotions", LandingBlockEntity<Promotion>>
+  | LandingBlockBase<"new-playlists", LandingBlockEntity<PlayList>>
+  | LandingBlockBase<"mixes", LandingBlockEntity<MixLink>>
+  | LandingBlockBase<
+      "play-contexts",
+      LandingBlockEntity<
+        | PlayContext<"artist", Artist>
+        | PlayContext<"playlist", PlayList>
+        | PlayContext<"album", Album>
+      >
+    >
+  | LandingBlockBase<
+      "personal-playlists",
+      LandingBlockEntity<GeneratedPlayListItem>
+    >;
 
 export type LandingBlockEntity<T> = {
   id: string;

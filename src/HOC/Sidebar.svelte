@@ -19,18 +19,26 @@
   <div class="links">
     <ul>
       <li>
-        <div class="homepage__btn" class:active={selectedPage === "home"}>
+        <div class="basic__btn" class:active={selectedPage === "home"}>
           <Button mode="outlined" on:click={() => setPage("home")}>
             <Icon name="home" />
             Главная
           </Button>
         </div>
       </li>
-      <li class="liked__btn">
+      <li>
         <div class="liked__btn" class:active={selectedPage === "liked"}>
           <Button mode="outlined" on:click={() => setPage("liked")}>
             <Icon name="heart" />
             Мне нравится
+          </Button>
+        </div>
+      </li>
+      <li>
+        <div class="basic__btn" class:active={selectedPage === "search"}>
+          <Button mode="outlined" on:click={() => setPage("search")}>
+            <Icon name="search" />
+            Поиск
           </Button>
         </div>
       </li>
@@ -116,7 +124,7 @@
     --button-bg-color: var(--color-red);
   }
   .playlist__btn.active,
-  .homepage__btn.active {
+  .basic__btn.active {
     --button-color: var(--color-white);
     --button-bg-color: var(--color-primary);
   }

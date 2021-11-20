@@ -8,6 +8,7 @@
   import LikeBtn from "./LikeBtn.svelte";
 
   export let track: Track;
+  export let isLiked = false;
 
   export let isPlaying: boolean = false;
 
@@ -38,8 +39,10 @@
 
       <div class="controls">
         <LikeBtn
+          active={isLiked}
           on:click={(e) => {
             e.detail.stopPropagation();
+            dispatch("like");
           }}
         />
       </div>
@@ -60,6 +63,9 @@
   }
   .cover {
     position: relative;
+    width: 50px;
+    min-width: 50px;
+    height: 50px;
   }
   .cover__animation {
     position: absolute;
@@ -69,7 +75,7 @@
     height: 100%;
     background-color: var(--color-black24);
     border-radius: var(--border-radius);
-    z-index: 10;
+    z-index: 101;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -102,6 +108,7 @@
   .artists {
     font-size: 0.85rem;
     color: var(--color-black80);
+    text-align: left;
   }
   .content {
     flex-grow: 1;

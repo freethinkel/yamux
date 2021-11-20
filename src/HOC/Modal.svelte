@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { fade, fly } from "svelte/transition";
+
   import { modalStore } from "../store/modal";
 
   $: {
@@ -11,9 +13,19 @@
 </script>
 
 {#if $modalStore.component}
-  <div class="wrapper">
-    <div class="container">
-      <svelte:component this={$modalStore.component} />
+  <div class="wrapper" class:sidebar={$modalStore.isSidebar}>
+    <div
+      class="overlay"
+      in:fade={{ duration: 100, delay: 200 }}
+      out:fade={{ duration: 100 }}
+      on:click={() => modalStore.closeModal()}
+    />
+    <div
+      class="content"
+      in:fly={{ x: 60, duration: 200, delay: 300, y: 0 }}
+      out:fly={{ x: -60, duration: 200, y: 0 }}
+    >
+      <svelte:component this={$modalStore.component} {...$modalStore.props} />
     </div>
   </div>
 {/if}
@@ -28,11 +40,28 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 9999;
+  }
+
+  .sidebar {
+    justify-content: flex-end;
+    align-items: flex-start;
+  }
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9998;
     background-color: var(--color-black50);
   }
-  .container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+  .sidebar .overlay {
+    background-color: var(--color-black12);
+  }
+  .content {
+    z-index: 9999;
+    height: 100%;
   }
 </style>

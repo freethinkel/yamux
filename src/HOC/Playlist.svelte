@@ -38,6 +38,10 @@
         <TrackCard
           track={trackItem.track}
           isPlaying={$playerStore.track?.id === trackItem.track.id}
+          isLiked={playlistStore.isLiked(
+            trackItem.track,
+            $playlistStore.likeds
+          )}
           on:select={() => play(trackItem.track)}
         />
       </div>

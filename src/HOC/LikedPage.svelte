@@ -7,12 +7,6 @@
 
   import { playlistStore } from "../store/playlist";
 
-  onMount(() => {
-    if (!$playlistStore.likeds.length) {
-      playlistStore.getLikedTracks();
-    }
-  });
-
   const play = (track: Track) => {
     playerStore.setTrack(track, $playlistStore.likeds);
   };
@@ -32,6 +26,7 @@
       <div class="track__card">
         <TrackCard
           {track}
+          isLiked
           on:select={() => play(track)}
           isPlaying={$playerStore.track?.id === track.id}
         />

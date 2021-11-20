@@ -7,15 +7,19 @@
   import Playlist from "./Playlist.svelte";
   import Player from "./Player.svelte";
   import LikedPage from "./LikedPage.svelte";
+  import SeachPage from "./SeachPage.svelte";
 
   let page = "home";
 
   $: currentPage = (() => {
-    if (page === "home") {
-      return { component: HomePage, props: {} };
-    }
-    if (page === "liked") {
-      return { component: LikedPage, props: {} };
+    const _screen = {
+      home: HomePage,
+      liked: LikedPage,
+      search: SeachPage,
+    }[page];
+
+    if (_screen) {
+      return { component: _screen, props: {} };
     }
 
     return {
@@ -64,8 +68,20 @@
     flex-grow: 1;
     max-height: 100vh;
     height: 100%;
+    position: relative;
+  }
+  .content__player {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 200;
+    background-color: var(--color-white80);
+    backdrop-filter: blur(9px);
+    -webkit-backdrop-filter: blur(9px);
   }
   .content__inner {
+    padding-top: 60px;
     flex-grow: 1;
     overflow: auto;
   }

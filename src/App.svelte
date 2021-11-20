@@ -7,12 +7,15 @@
   import AuthModal from "./HOC/AuthModal.svelte";
   import Main from "./HOC/Main.svelte";
   import { playlistStore } from "./store/playlist";
+  import { homeStore } from "./store/home";
 
   onMount(() => {
     if (!$authStore.token) {
       modalStore.openModal(AuthModal);
     } else {
       playlistStore.getPlaylists();
+      playlistStore.getLikedTracks();
+      homeStore.getData();
     }
   });
 </script>

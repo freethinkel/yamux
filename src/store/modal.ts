@@ -1,15 +1,30 @@
 import { writable } from "svelte/store";
 
-const store = writable({
+const DEFAULT = {
   component: null,
-});
+  isSidebar: false,
+  props: {},
+};
+
+const store = writable({ ...DEFAULT });
 
 export const modalStore = {
   subscribe: store.subscribe,
   set: store.set,
-  openModal(component) {
+  closeModal() {
+    store.set({ ...DEFAULT });
+  },
+  openModal(
+    component: any,
+    options?: Partial<Omit<typeof DEFAULT, "component">>
+  ) {
     store.update((state) => {
       state.component = component;
+      if (options) {
+        Object.entries(options).forEach(([key, value]) => {
+          state[key] = value;
+        });
+      }
       return state;
     });
   },

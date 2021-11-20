@@ -5,15 +5,21 @@ import { API_URL } from "../config";
 import type { PlayList } from "../models/playlist";
 import type { YandexMusicResponse } from "../models/yandex";
 import { getUserId, isAutorized } from "../store/auth";
-import type {
+import {
+  ALL_LANDING_BLOCKS,
   DownloadInfo,
   GetTracksResponse,
+  ISearchOptions,
+  LandingBlockType,
+  LandingResponse,
   LikedTracksResponse,
+  SearchResponse,
   TrackDownloadInfo,
   TrackItem,
 } from "../models/types";
 import type { GeneratedPlayList } from "../models/feed";
 import crypto from "crypto-js";
+import { querystring } from "../helpers";
 
 export const httpClient = axios.create();
 
@@ -31,11 +37,17 @@ export const httpRust = {
     });
   },
   get: <T extends any>(
-    url: string
+    url: string,
+    config?: Partial<http.HttpOptions>
   ): Promise<{
     data: T;
   }> => {
-    return getClient().then((client) => client.get(url, { headers: headers }));
+    return getClient().then((client) =>
+      client.get(url, {
+        ...(config || {}),
+        headers: { ...((config || {}).headers || {}), ...headers },
+      })
+    );
   },
   post: <T extends any>(
     url: string,
@@ -46,8 +58,8 @@ export const httpRust = {
   }> => {
     return getClient().then((client) =>
       client.post(url, body, {
-        headers: { ...((config || {}).headers || {}), ...headers },
         ...(config || {}),
+        headers: { ...((config || {}).headers || {}), ...headers },
       })
     );
   },
@@ -76,9 +88,9 @@ export class ApiService {
     );
   }
 
-  static getPlaylistInfo(kind: number) {
+  static getPlaylistInfo(kind: number, params?: { userId: number | string }) {
     return httpRust.get<YandexMusicResponse<GeneratedPlayList>>(
-      `${API_URL}/users/${getUserId()}/playlists/${kind}`
+      `${API_URL}/users/${params?.userId ?? getUserId()}/playlists/${kind}`
     );
   }
 
@@ -123,17 +135,14 @@ export class ApiService {
     withPositions?: boolean
   ): Promise<GetTracksResponse> {
     try {
-      const sp = new URLSearchParams();
-      Object.entries({
-        "track-ids": trackIds.join(","),
-        "with-positions": withPositions || false,
-      }).forEach(([key, value]) => {
-        sp.append(key, value.toString());
-      });
-
       const tracks = await httpRust.post<GetTracksResponse>(
         `${API_URL}/tracks/`,
-        http.Body.text(sp.toString()),
+        http.Body.text(
+          querystring({
+            "track-ids": trackIds.join(","),
+            "with-positions": withPositions || false,
+          })
+        ),
         {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -156,5 +165,50 @@ export class ApiService {
     );
 
     return tracks;
+  }
+
+  static async search(query: string, options?: ISearchOptions) {
+    const opts = options || {};
+
+    return httpRust.get<SearchResponse>(`${API_URL}/search`, {
+      query: {
+        type: opts?.type ?? "all",
+        text: query,
+        page: (opts.page ?? 0).toString(),
+        nococrrect: (opts.nococrrect ?? false).toString(),
+      },
+    });
+  }
+  static getLanding(...blocks: LandingBlockType[]) {
+    return httpRust.get<LandingResponse>(
+      `${API_URL}/landing3?blocks=${blocks.join(",")}`
+    );
+  }
+
+  static async getHomeData() {
+    return this.getLanding(...ALL_LANDING_BLOCKS);
+  }
+
+  static async likeAction(
+    objectType: "track" | "artist" | "playlist" | "album",
+    ids: number | string | number[] | string[],
+    remove = false
+  ): Promise<any> {
+    const action = remove ? "remove" : "add-multiple";
+    const result = await httpRust.post<GetTracksResponse>(
+      `${API_URL}/users/${getUserId()}/likes/${objectType}s/${action}`,
+      http.Body.text(
+        querystring({
+          [`${objectType}-ids`]: Array.isArray(ids) ? ids.join(",") : ids,
+        })
+      ),
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
+
+    return result;
   }
 }

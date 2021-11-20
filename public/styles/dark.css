@@ -1,0 +1,24 @@
+:root {
+  --color-primary: rgba(102, 126, 234, 1);
+  --color-primary12: rgba(102, 126, 234, 0.12);
+
+  --color-lightgray: rgb(34, 34, 34);
+
+  --color-black: rgba(245, 245, 245, 1);
+  --color-black50: rgba(245, 245, 245, 0.5);
+  --color-black80: rgba(245, 245, 245, 0.8);
+  --color-black12: rgba(245, 245, 245, 0.12);
+  --color-black24: rgba(245, 245, 245, 0.24);
+  --color-black06: rgba(245, 245, 245, 0.06);
+
+  --color-red: rgba(255, 85, 85, 1);
+  --color-red12: rgba(255, 85, 85, 0.12);
+
+  --color-background: #141414;
+  --color-white: rgb(32, 32, 32);
+  --color-white50: rgba(32, 32, 32, 0.5);
+  --color-white80: rgba(32, 32, 32, 0.8);
+
+  --border-radius: 8px;
+  --transition: 0.2s;
+}

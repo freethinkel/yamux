@@ -13,6 +13,7 @@
   },
   "scripts": {
     "dev": "node build",
+    "build": "node build --prod",
     "tauri": "tauri"
   },
   "eslintConfig": {
