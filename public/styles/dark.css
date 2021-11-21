@@ -19,6 +19,8 @@
   --color-white50: rgba(32, 32, 32, 0.5);
   --color-white80: rgba(32, 32, 32, 0.8);
 
+  --card-color: rgba(44, 44, 44, 1);
+
   --border-radius: 8px;
   --transition: 0.2s;
 }

@@ -33,7 +33,7 @@
     cursor: pointer;
   }
   .wrapper > :global(.card) {
-    background-color: var(--enitity-background-color);
+    background-color: var(--enitity-background-color, var(--card-color));
   }
   .wrapper > :global(div) {
     height: 100%;
