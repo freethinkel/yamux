@@ -5,6 +5,7 @@
   import Icon from "../components/Icon.svelte";
   import { authStore } from "../store/auth";
   import { playlistStore } from "../store/playlist";
+  import {appWindow, WindowManager} from "@tauri-apps/api/window";
 
   export let selectedPage: string;
 
@@ -13,9 +14,32 @@
   const setPage = (id: string) => {
     dispatch("setPage", id);
   };
+
+  const handleClose = () => {
+    appWindow.close();
+  }
+
+  const handleMinimize = () => {
+    appWindow.minimize();
+  }
+
+  const handleMaximize = () => {
+    appWindow.isFullscreen().then((state) => {
+      appWindow.setFullscreen(!state)
+    })
+  }
+
+  const startDragWindow = () => {
+    appWindow.startDragging();
+  }
 </script>
 
 <nav class="wrapper">
+  <div class="links" style="background-color: red" on:mousedown={() => startDragWindow()}>
+    <Button mode="outlined" on:click={() => handleClose()}>X</Button>
+    <Button mode="outlined" on:click={() => handleMinimize()}>-</Button>
+    <Button mode="outlined" on:click={() => handleMaximize()}>O</Button>
+  </div>
   <div class="links">
     <ul>
       <li>
