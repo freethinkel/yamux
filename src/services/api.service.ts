@@ -1,6 +1,5 @@
 import axios from "axios";
 import { http } from "@tauri-apps/api";
-import { derived } from "../../node_modules/svelte/store";
 import { API_URL } from "../config";
 import type { PlayList } from "../models/playlist";
 import type { YandexMusicResponse } from "../models/yandex";
@@ -22,10 +21,7 @@ import { querystring } from "../helpers";
 
 export const httpClient = axios.create();
 
-const getClient = (): Promise<http.Client> =>
-  new (window as any).__TAURI__.http.getClient().then((c) => {
-    return new (window as any).__TAURI__.http.Client(c.id);
-  });
+const getClient = http.getClient;
 
 const headers = {};
 
@@ -35,32 +31,30 @@ export const httpRust = {
       headers[key] = value;
     });
   },
-  get: <T extends any>(
+  get: async <T extends any>(
     url: string,
     config?: Partial<http.HttpOptions>
   ): Promise<{
     data: T;
   }> => {
-    return getClient().then((client) =>
-      client.get(url, {
-        ...(config || {}),
-        headers: { ...((config || {}).headers || {}), ...headers },
-      })
-    );
+    const client = await getClient();
+    return await client.get(url, {
+      ...(config || {}),
+      headers: { ...((config || {}).headers || {}), ...headers },
+    });
   },
-  post: <T extends any>(
+  post: async <T extends any>(
     url: string,
     body?: http.Body,
     config?: Partial<http.HttpOptions>
   ): Promise<{
     data: T;
   }> => {
-    return getClient().then((client) =>
-      client.post(url, body, {
-        ...(config || {}),
-        headers: { ...((config || {}).headers || {}), ...headers },
-      })
-    );
+    const client = await getClient();
+    return await client.post(url, body, {
+      ...(config || {}),
+      headers: { ...((config || {}).headers || {}), ...headers },
+    });
   },
 };
 
@@ -118,7 +112,7 @@ export class ApiService {
   }
 
   static async createTrackURL(info: DownloadInfo) {
-    const trackUrl = `XGRlBW9FXlekgbPrRHuSiA${info["path"].substr(1)}${
+    const trackUrl = `XGRlBW9FXlekgbPrRHuSiA${info["path"].substring(1)}${
       info["s"]
     }`;
 

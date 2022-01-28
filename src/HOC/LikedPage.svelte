@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onMount } from "svelte";
   import Loader from "../components/Loader.svelte";
   import TrackCard from "../components/TrackCard.svelte";
   import type { Track } from "../models/types";

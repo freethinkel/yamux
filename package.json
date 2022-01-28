@@ -1,6 +1,6 @@
 {
   "name": "yamux",
-  "version": "0.0.0",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -16,9 +16,10 @@
     "crypto-js": "^4.1.1"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.0.0-beta.10",
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.30",
+    "@tauri-apps/cli": "^1.0.0-beta.10",
     "@tsconfig/svelte": "^2.0.1",
+    "@types/crypto-js": "^4.1.0",
     "svelte": "^3.44.0",
     "svelte-check": "^2.2.7",
     "svelte-preprocess": "^4.9.8",

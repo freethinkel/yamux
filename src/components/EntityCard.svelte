@@ -1,6 +1,5 @@
 <script lang="ts">
   import { createEventDispatcher } from "svelte";
-  import type { PlayList } from "../models/playlist";
   import Card from "./Card.svelte";
 
   import Cover from "./Cover.svelte";

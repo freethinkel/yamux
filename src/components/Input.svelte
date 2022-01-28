@@ -16,7 +16,7 @@
   export let naked: boolean = false;
   export let regExp: RegExp | undefined = undefined;
 
-  let textarea;
+  let textarea: HTMLTextAreaElement;
 
   const dispatch = createEventDispatcher();
 
@@ -26,20 +26,22 @@
     }
   });
 
-  const onResize = (el) => {
+  const onResize = (el: HTMLElement) => {
     el.style.height = "auto";
     el.style.height = `${el.scrollHeight}px`;
   };
 
-  const onChange = (event) => {
-    const _value = event.target.value;
+  const onChange: svelte.JSX.FormEventHandler<
+    HTMLTextAreaElement | HTMLInputElement
+  > = (event) => {
+    const _value = event.currentTarget.value;
     if (regExp && !regExp.test(_value) && _value.trim() !== "") {
-      event.target.value = value;
+      event.currentTarget.value = value;
       value = value;
       return;
     }
     if (as === "textarea") {
-      onResize(event.target);
+      onResize(event.currentTarget);
     }
     dispatch("input", _value);
     value = _value;

@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { dataDir } from "@tauri-apps/api/path";
-
   import EntityCard from "../components/EntityCard.svelte";
   import TrackCard from "../components/TrackCard.svelte";
 

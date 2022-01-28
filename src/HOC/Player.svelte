@@ -29,7 +29,7 @@
       audioEl.pause();
     }
 
-    audioEl.onloadeddata = (e) => {
+    audioEl.onloadeddata = () => {
       totalDuration = audioEl.duration;
     };
 
@@ -63,7 +63,7 @@
     navigator.mediaSession.setActionHandler("seekforward", function () {
       /* Code excerpted. */
     });
-    navigator.mediaSession.setActionHandler("previoustrack", function (e) {
+    navigator.mediaSession.setActionHandler("previoustrack", function () {
       playerStore.backwardQueue();
     });
     navigator.mediaSession.setActionHandler("nexttrack", function () {
@@ -77,7 +77,7 @@
     audioEl.currentTime = totalDuration * newPos;
   };
 
-  const getTime = (t) => {
+  const getTime = (t: number) => {
     const m = ~~(t / 60);
     const s = (~~(t % 60)).toString().padStart(2, "0");
 

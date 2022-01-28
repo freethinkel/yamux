@@ -26,8 +26,7 @@
     margin-bottom: 2px;
   }
 
-  h5,
-  p {
+  h5 {
     word-break: break-word;
   }
 </style>

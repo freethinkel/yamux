@@ -1,13 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { get } from "svelte/store";
   import Loader from "../components/Loader.svelte";
 
   import TrackCard from "../components/TrackCard.svelte";
-  import type {
-    GeneratedPlayList,
-    GeneratedPlayListItem,
-  } from "../models/feed";
   import type { PlayList } from "../models/playlist";
 
   import type { Track } from "../models/types";

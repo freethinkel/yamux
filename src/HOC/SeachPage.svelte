@@ -9,7 +9,7 @@
   import { playerStore } from "../store/player";
   import { playlistStore } from "../store/playlist";
 
-  let timer;
+  let timer: NodeJS.Timer;
   let loading = false;
   let tracks = [] as Track[];
   let artists = [] as Artist[];
@@ -28,7 +28,7 @@
     }
   };
 
-  const onInput = (val) => {
+  const onInput = (val: CustomEvent) => {
     clearTimeout(timer);
     timer = setTimeout(() => {
       search(val.detail);
@@ -87,7 +87,5 @@
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
-  }
-  .artist__card {
   }
 </style>
