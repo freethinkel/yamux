@@ -1,0 +1,96 @@
+:root {
+  --color-primary: rgba(102, 126, 234, 1);
+  --color-primary12: rgba(102, 126, 234, 0.12);
+
+  --color-lightgray: rgba(241, 243, 247, 1);
+
+  --color-black: rgba(24, 45, 84, 1);
+  --color-black50: rgba(24, 45, 84, 0.5);
+  --color-black80: rgba(24, 45, 84, 0.8);
+  --color-black12: rgba(24, 45, 84, 0.12);
+  --color-black24: rgba(24, 45, 84, 0.24);
+  --color-black06: rgba(24, 45, 84, 0.06);
+
+  --color-red: rgba(255, 85, 85, 1);
+  --color-red12: rgba(255, 85, 85, 0.12);
+
+  --color-background: #f5f5f5;
+  --color-white: #fff;
+  --color-white50: rgba(255, 255, 255, 0.5);
+  --color-white80: rgba(255, 255, 255, 0.8);
+
+  --card-color: rgba(255, 255, 255, 1);
+
+  --border-radius: 8px;
+  --transition: 0.2s;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary: rgba(102, 126, 234, 1);
+    --color-primary12: rgba(102, 126, 234, 0.12);
+
+    --color-lightgray: rgb(34, 34, 34);
+
+    --color-black: rgba(245, 245, 245, 1);
+    --color-black50: rgba(245, 245, 245, 0.5);
+    --color-black80: rgba(245, 245, 245, 0.8);
+    --color-black12: rgba(245, 245, 245, 0.12);
+    --color-black24: rgba(245, 245, 245, 0.24);
+    --color-black06: rgba(245, 245, 245, 0.06);
+
+    --color-red: rgba(255, 85, 85, 1);
+    --color-red12: rgba(255, 85, 85, 0.12);
+
+    --color-background: #141414;
+    --color-white: rgb(32, 32, 32);
+    --color-white50: rgba(32, 32, 32, 0.5);
+    --color-white80: rgba(32, 32, 32, 0.8);
+
+    --card-color: rgba(44, 44, 44, 1);
+
+    --border-radius: 8px;
+    --transition: 0.2s;
+  }
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+body,
+html {
+  margin: 0;
+  background-color: var(--color-background);
+  font-family: "ibm plex sans", sans-serif;
+  color: var(--color-black);
+  font-size: 14px;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  margin: 0;
+}
+
+.container {
+  max-width: 1000px;
+  padding: 0 12px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.page {
+  padding-top: 24px;
+  padding-bottom: 32px;
+}
