@@ -2,7 +2,6 @@
   import { onMount } from "svelte";
   import Button from "../components/Button.svelte";
   import Cover from "../components/Cover.svelte";
-  import { getTime } from "../components/EventsTimeList.svelte";
   import Icon from "../components/Icon.svelte";
   import LikeBtn from "../components/LikeBtn.svelte";
   import Slider from "../components/Slider.svelte";
@@ -86,7 +85,7 @@
   };
 </script>
 
-<div class="wrapper">
+<div class="wrapper" data-tauri-drag-region>
   <div class="cover">
     <Cover url={$playerStore.track?.coverUri} size={50} />
   </div>
@@ -117,9 +116,11 @@
       ><Icon name="player-skip-forward" /></Button
     >
   </div>
-  <div class="content">
-    <div class="title">{$playerStore.track?.title || ""}</div>
-    <div class="artists">
+  <div class="content" data-tauri-drag-region>
+    <div class="title" data-tauri-drag-region>
+      {$playerStore.track?.title || ""}
+    </div>
+    <div class="artists" data-tauri-drag-region>
       {$playerStore.track?.artists?.map((e) => e.name)?.join(", ") || ""}
     </div>
   </div>
@@ -152,11 +153,11 @@
   }
 
   .cover {
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
   }
   .wrapper {
-    border-bottom: 1px solid var(--color-black06);
+    border-bottom: 1px solid var(--base-border);
     display: flex;
     align-items: center;
     padding: 0;
@@ -211,11 +212,11 @@
 
   .title {
     font-size: 1.1rem;
-    color: var(--color-black);
+    color: var(--base-title);
     font-weight: bold;
   }
   .artists {
     font-size: 0.85rem;
-    color: var(--color-black80);
+    color: var(--base-text);
   }
 </style>

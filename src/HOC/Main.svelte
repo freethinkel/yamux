@@ -57,8 +57,8 @@
     min-height: 100vh;
   }
   .sidebar {
-    border-right: 1px solid var(--color-black12);
-    max-width: 210px;
+    border-right: 1px solid var(--base-border);
+    max-width: 200px;
     width: 100%;
     height: 100vh;
   }
@@ -66,9 +66,9 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    max-height: 100vh;
-    height: 100%;
+    height: 100vh;
     position: relative;
+    background: var(--base-background);
   }
   .content__player {
     position: absolute;
@@ -76,7 +76,7 @@
     left: 0;
     width: 100%;
     z-index: 200;
-    background-color: var(--color-white80);
+    background-color: var(--base-panel);
     backdrop-filter: blur(9px);
     -webkit-backdrop-filter: blur(9px);
   }

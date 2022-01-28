@@ -33,11 +33,11 @@
   .wrapper {
     --button-padding: 6px;
     font-size: 1rem;
-    --button-color: var(--color-red);
+    --button-color: var(--base-red);
     --button-bg-color: transparent;
   }
 
   .wrapper.active path:last-child {
-    fill: var(--color-red);
+    fill: var(--base-red);
   }
 </style>

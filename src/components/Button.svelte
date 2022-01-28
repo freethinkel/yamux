@@ -31,7 +31,7 @@
     align-items: center;
     background: transparent;
     cursor: pointer;
-    font-weight: 500;
+    font-weight: normal;
     font-size: 1rem;
     height: var(--button-height, var(--height));
     padding: var(--button-padding, var(--padding));
@@ -46,28 +46,28 @@
 
   .raised {
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.12);
-    background-color: var(--button-bg-color, var(--color-primary));
-    color: var(--button-color, var(--color-white));
+    background-color: var(--button-bg-color, var(--base-primary));
+    color: var(--button-color, var(--base-text));
   }
 
   .outlined {
-    background-color: var(--button-bg-color, var(--color-primary12));
-    color: var(--button-color, var(--color-primary));
+    background-color: var(--button-bg-color, var(--base-primary12));
+    color: var(--button-color, var(--base-primary));
   }
 
   .size_small {
-    --height: 28px;
+    --height: 24px;
     --font-size: 0.9rem;
     --padding: 0 6px;
   }
 
   .size_normal {
-    --height: 38px;
+    --height: 32px;
     --font-size: 1rem;
     --padding: 0 12px;
   }
   .size_large {
-    --height: 42px;
+    --height: 36px;
     --font-size: 1.1rem;
     --padding: 0 12px;
   }

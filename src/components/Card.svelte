@@ -6,6 +6,6 @@
   .card {
     padding: var(--card-padding, 12px);
     border-radius: var(--border-radius);
-    background-color: var(--card-color, var(--color-white));
+    background-color: var(--base-panel);
   }
 </style>

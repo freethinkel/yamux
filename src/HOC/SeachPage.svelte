@@ -58,8 +58,8 @@
       <div class="track__card">
         <TrackCard
           {track}
-          on:select={() => playerStore.setTrack(track)}
-          isLiked={playlistStore.isLiked(track)}
+          on:select={() => playerStore.setTrack(track, tracks)}
+          isLiked={playlistStore.isLiked(track, $playlistStore.likeds)}
           isPlaying={$playerStore.track?.id === track.id}
         />
       </div>

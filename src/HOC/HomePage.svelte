@@ -10,10 +10,6 @@
   import PlaylistSide from "./PlaylistSide.svelte";
 
   $: blocks = $homeStore.blocks;
-
-  $: {
-    console.log("blocks", blocks);
-  }
 </script>
 
 <div class="wrapper">

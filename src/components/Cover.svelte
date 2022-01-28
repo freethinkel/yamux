@@ -17,7 +17,7 @@
 
 <div class="wrapper">
   {#if parsedUrl}
-    <img src={parsedUrl} alt="" />
+    <img draggable="false" src={parsedUrl} alt="" />
   {/if}
   <div class="overlay" style={`font-size: ${size / 2.3}px;`}>
     <Icon name="music" />
@@ -27,7 +27,7 @@
 <style>
   .wrapper {
     overflow: hidden;
-    border: 1px solid var(--color-black12);
+    border: 1px solid var(--base-border);
     border-radius: var(--border-radius);
     position: relative;
     height: 100%;
@@ -42,7 +42,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--color-lightgray);
+    background-color: var(--base-overlay);
   }
   .overlay :global(.icon) {
     font-size: inherit;

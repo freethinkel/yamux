@@ -84,20 +84,20 @@
     position: absolute;
     height: 5px;
     width: 100%;
-    background-color: var(--color-black24);
+    background-color: var(--base-overlay);
     backdrop-filter: blur(9px);
     -webkit-backdrop-filter: blur(9px);
   }
   .progress {
     height: 100%;
-    background-color: var(--color-primary);
+    background-color: var(--base-primary);
   }
   .point {
     position: absolute;
     top: 2.5px;
     left: 0;
     border-radius: 100%;
-    background-color: var(--color-primary);
+    background-color: var(--base-primary);
     cursor: pointer;
   }
   .point:hover {

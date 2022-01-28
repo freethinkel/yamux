@@ -1,18 +1,32 @@
-<script>
+<script lang="ts">
   import Card from "../components/Card.svelte";
   import Button from "../components/Button.svelte";
   import Input from "../components/Input.svelte";
   import Loader from "../components/Loader.svelte";
   import { authStore } from "../store/auth";
 
-  let login;
-  let password;
+  const form = {
+    login: "",
+    password: "",
+  };
   let loading = false;
+  let error = "";
+
+  const onChangeForm = (field: keyof typeof form) => (value: CustomEvent) => {
+    error = "";
+    form[field] = value.detail;
+  };
 
   const onSubmit = async () => {
     try {
       loading = true;
-      await authStore.login(login, password);
+      await authStore.login(form.login, form.password);
+      window.location.reload();
+    } catch (err) {
+      const data = err?.response?.data || {};
+      if (data.error) {
+        error = data.error_description;
+      }
     } finally {
       loading = false;
     }
@@ -23,9 +37,15 @@
   <Card>
     <h2>Авторизация</h2>
     <form on:submit|preventDefault={onSubmit}>
-      <Input bind:value={login} label="Логин" placeholder="Введите логин" />
       <Input
-        bind:value={password}
+        value={form.login}
+        on:input={onChangeForm("login")}
+        label="Логин"
+        placeholder="Введите логин"
+      />
+      <Input
+        value={form.password}
+        on:input={onChangeForm("password")}
         label="Пароль"
         placeholder="Введите пароль"
         type="password"
@@ -36,8 +56,12 @@
             <Loader message="Авторизация.." />
           </div>
         {/if}
-        <Button disabled={loading || !(login && password)} type="submit"
-          >Войти</Button
+        {#if error}
+          <span class="error_message">{error}</span>
+        {/if}
+        <Button
+          disabled={Boolean(error || loading || !(form.login && form.password))}
+          type="submit">Войти</Button
         >
       </div>
     </form>
@@ -46,8 +70,11 @@
 
 <style>
   .wrapper {
-    max-width: 340px;
-    width: 100%;
+    width: 340px;
+  }
+
+  h2 {
+    margin-bottom: 4px;
   }
 
   form {
@@ -60,6 +87,7 @@
     margin-top: 12px;
     display: flex;
     justify-content: flex-end;
+    align-items: center;
   }
   .loading {
     flex-grow: 1;
@@ -67,5 +95,9 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
+  }
+  .error_message {
+    flex-grow: 1;
+    color: var(--base-red);
   }
 </style>

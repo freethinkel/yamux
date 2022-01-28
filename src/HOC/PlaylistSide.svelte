@@ -67,12 +67,12 @@
 
 <style>
   .wrapper {
-    padding: 12px 8px;
-    background-color: var(--color-white80);
+    padding: 12px 8px 0;
+    background-color: var(--base-panel);
     -webkit-backdrop-filter: blur(9px);
     backdrop-filter: blur(9px);
     border-left: 12px;
-    height: 100%;
+    height: 100vh;
     width: 400px;
     display: flex;
     flex-direction: column;
@@ -82,6 +82,7 @@
     margin-top: 12px;
     flex-grow: 1;
     overflow: auto;
+    padding-bottom: 12px;
   }
 
   .track__card + .track__card {

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import DraggableWindow from "../components/DraggableWindow.svelte";
+
   import { createEventDispatcher } from "svelte";
 
   import Button from "../components/Button.svelte";
@@ -16,6 +18,7 @@
 </script>
 
 <nav class="wrapper">
+  <DraggableWindow style="height: 40px;" />
   <div class="links">
     <ul>
       <li>
@@ -71,7 +74,7 @@
       {$authStore.userName}
     </Button>
     <div class="logout__btn">
-      <Button mode="outlined" size="small">
+      <Button mode="outlined" size="small" on:click={() => authStore.logout()}>
         <Icon name="logout" />
       </Button>
     </div>
@@ -96,6 +99,11 @@
     overflow: auto;
   }
 
+  h4 {
+    font-size: 0.8rem;
+    color: var(--base-subtitle);
+  }
+
   ul {
     padding: 0;
     margin: 0;
@@ -110,23 +118,36 @@
   }
   li :global(button) {
     width: 100%;
-    /* justify-content: center; */
+  }
+  li + li {
+    margin-top: 4px;
   }
   .liked__btn {
     --button-color: var(--color-red);
-    --button-bg-color: var(--color-red12);
   }
-  li + li {
-    margin-top: 12px;
+  .liked__btn {
+    --button-color: var(--base-text);
+    --button-bg-color: transparent;
+  }
+  .liked__btn :global(.icon) {
+    color: var(--base-red);
   }
   .liked__btn.active {
-    --button-color: var(--color-white);
-    --button-bg-color: var(--color-red);
+    --button-bg-color: var(--base-overlay);
   }
+  .playlist__btn,
+  .basic__btn {
+    --button-color: var(--base-text);
+    --button-bg-color: transparent;
+  }
+  .playlist__btn :global(.icon),
+  .basic__btn :global(.icon) {
+    color: var(--base-primary);
+  }
+
   .playlist__btn.active,
   .basic__btn.active {
-    --button-color: var(--color-white);
-    --button-bg-color: var(--color-primary);
+    --button-bg-color: var(--base-overlay);
   }
   .profile {
     display: flex;
@@ -136,7 +157,7 @@
     --button-gap: 6px;
   }
   .logout__btn {
-    --button-color: var(--color-red);
-    --button-bg-color: var(--color-red12);
+    --button-color: var(--base-red);
+    --button-bg-color: transparent;
   }
 </style>

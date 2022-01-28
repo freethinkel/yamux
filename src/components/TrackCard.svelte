@@ -73,7 +73,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--color-black24);
+    background-color: var(--base-overlay);
     border-radius: var(--border-radius);
     z-index: 101;
     display: flex;
@@ -85,7 +85,7 @@
   .cover__animation div {
     width: 6px;
     height: 18px;
-    background: var(--color-white);
+    background: var(--base-primary);
   }
   .cover__animation div:nth-child(1) {
     animation: 0.4s 0s playing_item ease-in-out infinite alternate;
@@ -103,11 +103,11 @@
   .title {
     font-size: 1rem;
     font-weight: bold;
-    color: var(--color-black);
+    color: var(--base-title);
   }
   .artists {
     font-size: 0.85rem;
-    color: var(--color-black80);
+    color: var(--base-text);
     text-align: left;
   }
   .content {

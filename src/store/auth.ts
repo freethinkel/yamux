@@ -9,7 +9,7 @@ const DEFAULT = {
 };
 
 const store = writable(
-  (StorageService.getItem("authStore") as typeof DEFAULT) || DEFAULT
+  (StorageService.getItem("authStore") as typeof DEFAULT) || { ...DEFAULT }
 );
 
 store.subscribe((data) => {
@@ -31,6 +31,13 @@ export const authStore = {
       state.userName = login;
       return state;
     });
+
+    return res;
+  },
+  logout() {
+    localStorage.clear();
+    store.set({ ...DEFAULT });
+    window.location.reload();
   },
   setToken(token: string) {
     store.update((state) => {

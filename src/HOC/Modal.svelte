@@ -54,14 +54,13 @@
     width: 100%;
     height: 100%;
     z-index: 9998;
-    background-color: var(--color-black50);
+    background-color: var(--base-overlay);
   }
 
   .sidebar .overlay {
-    background-color: var(--color-black12);
+    background-color: var(--base-overlay);
   }
   .content {
     z-index: 9999;
-    height: 100%;
   }
 </style>
