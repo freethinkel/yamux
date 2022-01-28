@@ -9,7 +9,12 @@ use crate::menu::AddDefaultSubmenus;
 mod menu;
 
 use tauri::{Manager, Menu};
-use tauri_plugin_vibrancy::{Vibrancy, MacOSVibrancy};
+use tauri_plugin_vibrancy::Vibrancy;
+
+#[cfg(target_os = "macos")]
+use tauri_plugin_vibrancy::MacOSVibrancy;
+
+
 
 #[cfg(target_os = "macos")]
 use crate::patch_window::Toolbar;

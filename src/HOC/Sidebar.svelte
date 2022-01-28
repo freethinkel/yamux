@@ -1,24 +1,32 @@
 <script lang="ts">
   import DraggableWindow from "../components/DraggableWindow.svelte";
 
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, onMount } from "svelte";
 
   import Button from "../components/Button.svelte";
   import Icon from "../components/Icon.svelte";
   import { authStore } from "../store/auth";
   import { playlistStore } from "../store/playlist";
+  import { platform } from "@tauri-apps/api/os";
 
   export let selectedPage: string;
+  let isMacos = false;
 
   const dispatch = createEventDispatcher();
 
   const setPage = (id: string) => {
     dispatch("setPage", id);
   };
+
+  onMount(async () => {
+    isMacos = (await platform()) === "darwin";
+  });
 </script>
 
 <nav class="wrapper">
-  <DraggableWindow style="height: 40px;" />
+  {#if isMacos}
+    <DraggableWindow style="height: 40px;" />
+  {/if}
   <div class="links">
     <ul>
       <li>
