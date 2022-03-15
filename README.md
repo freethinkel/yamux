@@ -7,6 +7,7 @@
 - [x] Media key control
 - [x] Liked songs & like track
 - [x] Generated playlists
+- [x] Radio stations
 
 - [ ] Tracks caching
 - [ ] Settings
