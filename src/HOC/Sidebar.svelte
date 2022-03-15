@@ -38,6 +38,14 @@
         </div>
       </li>
       <li>
+        <div class="basic__btn" class:active={selectedPage === "radio"}>
+          <Button mode="outlined" on:click={() => setPage("radio")}>
+            <Icon name="radio" />
+            Радио
+          </Button>
+        </div>
+      </li>
+      <li>
         <div class="liked__btn" class:active={selectedPage === "liked"}>
           <Button mode="outlined" on:click={() => setPage("liked")}>
             <Icon name="heart" />
@@ -134,7 +142,7 @@
     --button-color: var(--color-red);
   }
   .liked__btn {
-    --button-color: var(--base-text);
+    --button-color: var(--base-title);
     --button-bg-color: transparent;
   }
   .liked__btn :global(.icon) {
@@ -145,7 +153,7 @@
   }
   .playlist__btn,
   .basic__btn {
-    --button-color: var(--base-text);
+    --button-color: var(--base-title);
     --button-bg-color: transparent;
   }
   .playlist__btn :global(.icon),

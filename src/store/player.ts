@@ -1,9 +1,15 @@
-import { writable } from "svelte/store";
+import { get, writable } from "svelte/store";
 import type { Track } from "../models/types";
+import { EventEmitter } from "./EventEmitter";
 
 const DEFAULT = {
   track: null as Track | null,
   queue: [] as Track[],
+  params: {} as PlayParams,
+};
+
+type PlayParams = {
+  isRadio: boolean;
 };
 
 const store = writable(DEFAULT);
@@ -11,6 +17,7 @@ const store = writable(DEFAULT);
 export const playerStore = {
   subscribe: store.subscribe,
   set: store.set,
+  channel: new EventEmitter(),
   forwardQueue() {
     store.update((state) => {
       const index = state.queue.indexOf(state.track);
@@ -30,10 +37,15 @@ export const playerStore = {
       return state;
     });
   },
-  setTrack(track: Track, queue?: Track[]) {
+  setTrack(track: Track, queue?: Track[], params?: Partial<PlayParams>) {
     store.update((state) => {
       state.track = track;
-      state.queue = queue || state.queue;
+      state.queue = queue || [];
+      if (params) {
+        Object.entries(params).forEach(([key, value]) => {
+          state.params[key] = value;
+        });
+      }
       return state;
     });
   },

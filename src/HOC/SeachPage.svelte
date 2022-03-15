@@ -9,7 +9,6 @@
   import { playerStore } from "../store/player";
   import { playlistStore } from "../store/playlist";
 
-  let timer: NodeJS.Timer;
   let loading = false;
   let tracks = [] as Track[];
   let artists = [] as Artist[];
@@ -18,26 +17,21 @@
     try {
       loading = true;
       const res = await ApiService.search(query);
-      console.log(res);
       tracks = res.data.result.tracks.results;
       artists = res.data.result.artists.results;
     } catch (err) {
-      console.log(err);
     } finally {
       loading = false;
     }
   };
 
-  const onInput = (val: CustomEvent) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      search(val.detail);
-    }, 300);
+  const onSearch = (val: CustomEvent) => {
+    search(val.detail);
   };
 </script>
 
 <div class="wrapper">
-  <Input label="Поиск" placeholder="Поиск песен" on:input={onInput} />
+  <Input label="Поиск" placeholder="Поиск песен" on:submit={onSearch} />
 
   {#if loading}
     <div class="loader">

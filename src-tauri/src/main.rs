@@ -23,7 +23,7 @@ use crate::patch_window::Toolbar;
 fn main() {
   let ctx = tauri::generate_context!();
 
-  tauri::Builder::default()
+  let mut app = tauri::Builder::default()
     .setup(|app| {
       let window = app.get_window("main").unwrap();
 
@@ -37,15 +37,21 @@ fn main() {
       }
 
       Ok(())
-    })
-    .menu(
-      Menu::new()
-        .add_default_app_submenu_if_macos(&ctx.package_info().name)
-        .add_default_file_submenu()
-        .add_default_edit_submenu()
-        .add_default_view_submenu()
-        .add_default_window_submenu()
-    )
-    .run(ctx)
+    });
+
+    #[cfg(target_os = "macos")]
+    {
+      app = app.menu(
+        Menu::new()
+          .add_default_app_submenu_if_macos(&ctx.package_info().name)
+          .add_default_file_submenu()
+          .add_default_edit_submenu()
+          .add_default_view_submenu()
+          .add_default_window_submenu()
+      );
+    }
+
+
+    app.run(ctx)
     .expect("error while running tauri application");
 }

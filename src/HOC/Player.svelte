@@ -1,5 +1,7 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { stationsStore } from "../store/stations";
+
+  import { onDestroy, onMount } from "svelte";
   import Button from "../components/Button.svelte";
   import Cover from "../components/Cover.svelte";
   import Icon from "../components/Icon.svelte";
@@ -16,9 +18,10 @@
   let currentDuration = 0;
 
   const replay = () => {
-    const _player = $playerStore;
-
     audioEl.onplay = () => {
+      if ($playerStore.params.isRadio) {
+        stationsStore.stationTrackStarted($playerStore.track);
+      }
       isPlaying = true;
     };
     audioEl.onpause = () => {
@@ -38,12 +41,15 @@
     };
 
     audioEl.onended = () => {
+      if ($playerStore.params.isRadio) {
+        stationsStore.stationTrackFinished($playerStore.track);
+      }
       playerStore.forwardQueue();
       isPlaying = false;
     };
 
-    if (_player.track) {
-      ApiService.getTrackUrl(_player.track?.id).then((url) => {
+    if ($playerStore.track) {
+      ApiService.getTrackUrl($playerStore.track?.id).then((url) => {
         audioEl.src = url;
         audioEl.play();
       });
@@ -51,6 +57,22 @@
   };
 
   onMount(() => {
+    playerStore.channel.on("pause", () => {
+      audioEl.pause();
+    });
+
+    playerStore.channel.on("play", () => {
+      audioEl.play();
+    });
+
+    playerStore.channel.on("toggle", () => {
+      if (audioEl.paused) {
+        audioEl.play();
+      } else {
+        audioEl.pause();
+      }
+    });
+
     navigator.mediaSession.setActionHandler("play", function () {
       audioEl.play();
     });
@@ -73,6 +95,10 @@
     playerStore.subscribe((_player) => replay());
   });
 
+  onDestroy(() => {
+    audioEl.pause();
+  });
+
   const setPosition = (newPos: number) => {
     audioEl.currentTime = totalDuration * newPos;
   };
@@ -83,6 +109,13 @@
 
     return `${m}:${s}`;
   };
+
+  const forwardQueue = () => {
+    if ($playerStore.params.isRadio && audioEl) {
+      stationsStore.stationSkip($playerStore.track, audioEl.duration);
+    }
+    playerStore.forwardQueue();
+  };
 </script>
 
 <div class="wrapper" data-tauri-drag-region>
@@ -92,6 +125,7 @@
   <div class="controls">
     <Button
       mode="outlined"
+      disabled={$playerStore.params.isRadio}
       size="small"
       on:click={() => playerStore.backwardQueue()}
       ><Icon name="player-skip-back" /></Button
@@ -109,10 +143,7 @@
         <Icon name="player-play" />
       {/if}
     </Button>
-    <Button
-      mode="outlined"
-      size="small"
-      on:click={() => playerStore.forwardQueue()}
+    <Button mode="outlined" size="small" on:click={forwardQueue}
       ><Icon name="player-skip-forward" /></Button
     >
   </div>

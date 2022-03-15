@@ -5,6 +5,7 @@
   import { homeStore } from "../store/home";
   import { modalStore } from "../store/modal";
   import { playerStore } from "../store/player";
+  import MyWave from "./MyWave.svelte";
   import PlaylistSide from "./PlaylistSide.svelte";
 
   $: blocks = $homeStore.blocks;
@@ -34,7 +35,6 @@
                 photo={entity.data.data.animatedCoverUri ||
                   entity.data.data.cover.uri}
                 on:select={() => {
-                  console.log(entity);
                   modalStore.openModal(PlaylistSide, {
                     isSidebar: true,
                     props: {
@@ -55,7 +55,6 @@
                 title={entity?.data.podcast.title}
                 photo={entity?.data.podcast.coverUri}
                 on:select={() => {
-                  console.log(entity);
                   modalStore.openModal(PlaylistSide, {
                     isSidebar: true,
                     props: {
@@ -76,7 +75,6 @@
                 title={entity?.data.title}
                 photo={entity?.data.image}
                 on:select={() => {
-                  console.log(entity);
                   // modalStore.openModal(SideTracklist, {
                   //   isSidebar: true,
                   //   props: {
@@ -97,7 +95,6 @@
                 title={entity?.data.title}
                 photo={entity?.data.coverUri}
                 on:select={() => {
-                  console.log(entity);
                   modalStore.openModal(PlaylistSide, {
                     isSidebar: true,
                     props: {
@@ -118,7 +115,6 @@
                 title={entity?.data.title}
                 photo={entity?.data.cover.uri}
                 on:select={() => {
-                  console.log(entity);
                   modalStore.openModal(PlaylistSide, {
                     isSidebar: true,
                     props: {
@@ -142,7 +138,6 @@
                 title={entity?.data.title}
                 photo={entity?.data.backgroundImageUri}
                 on:select={() => {
-                  console.log(entity);
                   modalStore.openModal(PlaylistSide, {
                     isSidebar: true,
                     props: {

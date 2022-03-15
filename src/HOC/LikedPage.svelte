@@ -38,6 +38,9 @@
   .wrapper {
     padding: 0 12px;
   }
+  .wrapper h1 {
+    margin-bottom: 24px;
+  }
   .track_list {
     padding-bottom: 24px;
   }

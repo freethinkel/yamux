@@ -21,7 +21,6 @@ export const playlistStore = {
     try {
       let isRemove = playlistStore.isLiked(track, get(store).likeds);
       const res = await ApiService.likeAction("track", [track.id], isRemove);
-      console.log(res);
       store.update((state) => {
         if (isRemove) {
           state.likeds = state.likeds.filter((t) => t.id !== track.id);
@@ -37,7 +36,6 @@ export const playlistStore = {
   },
   async getLikedTracks() {
     const res = await ApiService.getLikedTracks();
-    console.log(res);
     store.update((state) => {
       state.likeds = res.result;
       return state;
@@ -59,7 +57,6 @@ export const playlistStore = {
   },
   async getPlaylists() {
     const res = await ApiService.getUsersPlaylists();
-    console.log(res.data.result);
     store.update((state) => {
       state.playlists = res.data.result;
       return state;

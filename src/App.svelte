@@ -8,6 +8,7 @@
   import Main from "./HOC/Main.svelte";
   import { playlistStore } from "./store/playlist";
   import { homeStore } from "./store/home";
+  import { stationsStore } from "./store/stations";
 
   onMount(() => {
     if (!$authStore.token) {
@@ -16,6 +17,7 @@
       playlistStore.getPlaylists();
       playlistStore.getLikedTracks();
       homeStore.getData();
+      stationsStore.loadStations();
     }
   });
 </script>

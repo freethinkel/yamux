@@ -8,6 +8,7 @@
     | "radio"
     | "file"
     | "button"
+    | "search"
     | "number" = "text";
   export let as: "input" | "textarea" = "input";
   export let label: string = "";
@@ -46,6 +47,12 @@
     dispatch("input", _value);
     value = _value;
   };
+
+  const onKeyDown = (event: KeyboardEvent) => {
+    if (event.code === "Enter") {
+      dispatch("submit", value);
+    }
+  };
 </script>
 
 <!-- svelte-ignore a11y-label-has-associated-control -->
@@ -69,6 +76,7 @@
       {type}
       {placeholder}
       {value}
+      on:keydown={onKeyDown}
       on:input={onChange}
       on:change={onChange}
     />

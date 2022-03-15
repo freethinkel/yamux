@@ -18,6 +18,7 @@ import { ALL_LANDING_BLOCKS } from "../models/types";
 import type { GeneratedPlayList } from "../models/feed";
 import crypto from "crypto-js";
 import { querystring } from "../helpers";
+import type { FeedbackParams, Sequence, Station } from "../models/station";
 
 export const httpClient = axios.create();
 
@@ -180,6 +181,98 @@ export class ApiService {
 
   static async getHomeData() {
     return this.getLanding(...ALL_LANDING_BLOCKS);
+  }
+
+  static getStations() {
+    return httpRust.get<{ result: { stations: Station[] } }>(
+      `${API_URL}/rotor/stations/dashboard`
+    );
+  }
+
+  static getStationTracks(station: string, query?: { queueTrackId: string }) {
+    const params: Record<string, string> = {
+      settings2: "true",
+    };
+    if (query.queueTrackId) {
+      params.queue = query.queueTrackId;
+    }
+    return httpRust.get<{ result: { sequence: Sequence[]; batchId: string } }>(
+      `${API_URL}/rotor/station/${station}/tracks?${querystring(params)}`
+    );
+  }
+
+  static sendStationFeedback(station: string, params: Partial<FeedbackParams>) {
+    const data: Record<string, any> = {
+      type: params.type,
+      "batch-id": params.batchId,
+      timestamp: params.timestamp ?? Date.now(),
+      from: "desktop_win-home-playlist_of_the_day-playlist-default",
+    };
+
+    if (params.trackId) {
+      data.trackId = params.trackId;
+    }
+
+    if (params.totalPlayedSeconds) {
+      data.totalPlayedSeconds = params.totalPlayedSeconds;
+    }
+
+    return httpRust.post(
+      `${API_URL}/rotor/station/${station}/feedback`,
+      http.Body.json(data)
+    );
+  }
+
+  static sendStationFeedbackRadioStarted(
+    station: string,
+    { batchId }: { batchId: string }
+  ) {
+    return ApiService.sendStationFeedback(station, {
+      type: "radioStarted",
+      batchId,
+    });
+  }
+
+  static sendStationFeedbackSkip(
+    station: string,
+    {
+      trackId,
+      totalPlayedSeconds,
+      batchId,
+    }: {
+      trackId: string | number;
+      totalPlayedSeconds: number;
+      batchId: string;
+    }
+  ) {
+    return ApiService.sendStationFeedback(station, {
+      type: "skip",
+      trackId,
+      totalPlayedSeconds,
+      batchId,
+    });
+  }
+
+  static sendStationFeedbackTrackStarted(
+    station: string,
+    { trackId, batchId }: { trackId: string | number; batchId: string }
+  ) {
+    return ApiService.sendStationFeedback(station, {
+      type: "trackStarted",
+      trackId,
+      batchId,
+    });
+  }
+
+  static sendStationFeedbackTrackFinished(
+    station: string,
+    { trackId, batchId }: { trackId: string | number; batchId: string }
+  ) {
+    return ApiService.sendStationFeedback(station, {
+      type: "trackFinished",
+      trackId,
+      batchId,
+    });
   }
 
   static async likeAction(

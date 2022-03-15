@@ -8,6 +8,7 @@
   import Player from "./Player.svelte";
   import LikedPage from "./LikedPage.svelte";
   import SeachPage from "./SeachPage.svelte";
+  import RadioPage from "./RadioPage.svelte";
 
   let page = "home";
 
@@ -16,6 +17,7 @@
       home: HomePage,
       liked: LikedPage,
       search: SeachPage,
+      radio: RadioPage,
     }[page];
 
     if (_screen) {

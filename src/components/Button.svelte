@@ -47,7 +47,7 @@
   .raised {
     box-shadow: 0 2px 3px rgba(0, 0, 0, 0.12);
     background-color: var(--button-bg-color, var(--base-primary));
-    color: var(--button-color, var(--base-text));
+    color: var(--button-color, var(--base-title));
   }
 
   .outlined {
