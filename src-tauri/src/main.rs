@@ -9,16 +9,10 @@ use crate::menu::AddDefaultSubmenus;
 mod menu;
 
 use tauri::{Manager, Menu};
-use tauri_plugin_vibrancy::Vibrancy;
-
-#[cfg(target_os = "macos")]
-use tauri_plugin_vibrancy::MacOSVibrancy;
-
-
+use window_vibrancy::{apply_vibrancy, apply_blur, NSVisualEffectMaterial};
 
 #[cfg(target_os = "macos")]
 use crate::patch_window::Toolbar;
-
 
 fn main() {
   let ctx = tauri::generate_context!();
@@ -27,14 +21,14 @@ fn main() {
     .setup(|app| {
       let window = app.get_window("main").unwrap();
 
-      #[cfg(target_os = "windows")]
-      window.apply_blur();
-
-      #[cfg(target_os = "macos")]
-      {
-        window.apply_toolbar();
-        window.apply_vibrancy(MacOSVibrancy::AppearanceBased);
+      #[cfg(target_os = "windows")] {
+        apply_blur(&window);
       }
+  
+      #[cfg(target_os = "macos")] {
+        apply_vibrancy(&window, NSVisualEffectMaterial::AppearanceBased);
+        window.apply_toolbar();
+      } 
 
       Ok(())
     });

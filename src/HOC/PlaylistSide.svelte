@@ -10,6 +10,7 @@
   import { homeStore } from "../store/home";
   import { playerStore } from "../store/player";
   import { playlistStore } from "../store/playlist";
+  import TrackList from "./TrackList.svelte";
 
   export let title: string;
   export let playlist: PlayList;
@@ -46,16 +47,7 @@
 
   {#if !loading}
     <div class="tracks">
-      {#each tracks as track}
-        <div class="track__card">
-          <TrackCard
-            {track}
-            on:select={() => playerStore.setTrack(track, tracks)}
-            on:like={() => playlistStore.likeTrack(track)}
-            isLiked={playlistStore.isLiked(track, $playlistStore.likeds)}
-          />
-        </div>
-      {/each}
+      <TrackList {tracks} />
     </div>
   {/if}
 </div>
@@ -78,10 +70,6 @@
     flex-grow: 1;
     overflow: auto;
     padding-bottom: 12px;
-  }
-
-  .track__card + .track__card {
-    margin-top: 6px;
   }
 
   .loader {

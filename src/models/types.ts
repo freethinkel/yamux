@@ -51,6 +51,10 @@ export type Artist = {
   cover?: Cover;
   decomposed?: any[];
   genres: any[];
+  description: {
+    text: string;
+    uri: string;
+  };
   // TODO: when use "yandexApi.search" id is "number", but when use "yandexApi.getPopularTracks" it is "string"
   id: string | number;
   name: string;
@@ -61,6 +65,40 @@ export type Artist = {
    */
   ticketsAvailable?: boolean;
   regions?: string[];
+};
+
+export type Video = {
+  cover: string;
+  embedUrl: string;
+  provider: "yandex" | string;
+  providerVideoId: string;
+  title: string;
+};
+
+export type ArtistInfo = {
+  albums: Album[];
+  allCovers: Cover[];
+  alsoAlbums: Album[];
+  artist: Artist;
+  concerts: any[];
+  hasPromotions: boolean;
+  lastReleaseIds: number[];
+  lastReleases: Object[];
+  playlistIds: { uid: number; kind: number }[];
+  playlists: PlayList[];
+  popularTracks: Track[];
+  similarArtists: Artist[];
+  videos: Video[];
+  vinyls: [];
+};
+
+export type Lyrics = {
+  fullLyrics: string;
+  hasRights: boolean;
+  id: number;
+  lyrics: string;
+  showTranslation: boolean;
+  textLanguage: "ru" | string;
 };
 
 export type Track = {

@@ -9,6 +9,7 @@
   import LikedPage from "./LikedPage.svelte";
   import SeachPage from "./SeachPage.svelte";
   import RadioPage from "./RadioPage.svelte";
+  import Resizable from "../components/Resizable.svelte";
 
   let page = "home";
 
@@ -36,9 +37,11 @@
 </script>
 
 <div class="wrapper">
-  <div class="sidebar">
-    <Sidebar selectedPage={page} on:setPage={(p) => (page = p.detail)} />
-  </div>
+  <Resizable width={200} min={170} max={350}>
+    <div class="sidebar">
+      <Sidebar selectedPage={page} on:setPage={(p) => (page = p.detail)} />
+    </div>
+  </Resizable>
   <div class="content">
     <div class="content__player">
       <Player />
@@ -60,8 +63,6 @@
   }
   .sidebar {
     border-right: 1px solid var(--base-border);
-    max-width: 200px;
-    width: 100%;
     height: 100vh;
   }
   .content {

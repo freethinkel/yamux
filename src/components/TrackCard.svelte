@@ -6,6 +6,10 @@
   import Card from "./Card.svelte";
   import Cover from "./Cover.svelte";
   import LikeBtn from "./LikeBtn.svelte";
+  import ContextMenu from "./ContextMenu.svelte";
+  import { modalStore } from "../store/modal";
+  import ArtistSide from "../HOC/ArtistSide.svelte";
+  import LyricsSide from "../HOC/LyricsSide.svelte";
 
   export let track: Track;
   export let isLiked = false;
@@ -13,42 +17,77 @@
   export let isPlaying: boolean = false;
 
   const dispatch = createEventDispatcher();
+  const options = [
+    {
+      id: "lyrics",
+      label: "Текст песни",
+    },
+    {
+      divider: true,
+    },
+  ].concat(
+    track.artists.map((artist) => ({
+      id: `artist_${artist.id}`,
+      label: artist.name,
+    }))
+  );
+
+  const onContextMenu = (id: string) => {
+    if (id.indexOf("artist") === 0) {
+      const artist = track.artists.find(
+        (artist) => String(artist.id) === id.split("_")[1]
+      );
+      modalStore.openModal(ArtistSide, {
+        isSidebar: true,
+        props: {
+          artist,
+        },
+      });
+    } else if (id === "lyrics") {
+      modalStore.openModal(LyricsSide, {
+        isSidebar: true,
+        props: { track },
+      });
+    }
+  };
 </script>
 
-<button class="wrapper" on:click={() => dispatch("select")}>
-  <Card>
-    <div class="inner">
-      <div class="cover">
-        <Cover url={track.coverUri} size={40} />
-        {#if isPlaying}
-          <div class="cover__animation">
-            <div />
-            <div />
-            <div />
+<ContextMenu {options} on:select={({ detail }) => onContextMenu(detail)}>
+  <button class="wrapper" on:click={() => dispatch("select")}>
+    <Card>
+      <div class="inner">
+        <div class="cover">
+          <Cover url={track.coverUri} size={40} />
+          {#if isPlaying}
+            <div class="cover__animation">
+              <div />
+              <div />
+              <div />
+            </div>
+          {/if}
+        </div>
+        <div class="content">
+          <div class="title">
+            {track.title}
           </div>
-        {/if}
-      </div>
-      <div class="content">
-        <div class="title">
-          {track.title}
+          <div class="artists">
+            {track.artists.map((a) => a.name).join(", ")}
+          </div>
         </div>
-        <div class="artists">
-          {track.artists.map((a) => a.name).join(", ")}
-        </div>
-      </div>
 
-      <div class="controls">
-        <LikeBtn
-          active={isLiked}
-          on:click={(e) => {
-            e.detail.stopPropagation();
-            dispatch("like");
-          }}
-        />
+        <div class="controls">
+          <LikeBtn
+            active={isLiked}
+            on:click={(e) => {
+              e.detail.stopPropagation();
+              dispatch("like");
+            }}
+          />
+        </div>
       </div>
-    </div>
-  </Card>
-</button>
+    </Card>
+  </button>
+</ContextMenu>
 
 <style>
   .wrapper {

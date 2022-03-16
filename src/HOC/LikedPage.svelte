@@ -5,6 +5,7 @@
   import { playerStore } from "../store/player";
 
   import { playlistStore } from "../store/playlist";
+  import TrackList from "./TrackList.svelte";
 
   const play = (track: Track) => {
     playerStore.setTrack(track, $playlistStore.likeds);
@@ -21,16 +22,7 @@
   {/if}
 
   <div class="track_list">
-    {#each $playlistStore.likeds as track}
-      <div class="track__card">
-        <TrackCard
-          {track}
-          isLiked
-          on:select={() => play(track)}
-          isPlaying={$playerStore.track?.id === track.id}
-        />
-      </div>
-    {/each}
+    <TrackList tracks={$playlistStore.likeds} allLikes />
   </div>
 </div>
 
@@ -43,9 +35,6 @@
   }
   .track_list {
     padding-bottom: 24px;
-  }
-  .track__card + .track__card {
-    margin-top: 6px;
   }
   .loader {
     display: flex;

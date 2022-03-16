@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { modalStore } from "../store/modal";
+
   import ArtistCard from "../components/ArtistCard.svelte";
 
   import Input from "../components/Input.svelte";
@@ -8,6 +10,8 @@
   import { ApiService } from "../services/api.service";
   import { playerStore } from "../store/player";
   import { playlistStore } from "../store/playlist";
+  import ArtistSide from "./ArtistSide.svelte";
+  import TrackList from "./TrackList.svelte";
 
   let loading = false;
   let tracks = [] as Track[];
@@ -28,6 +32,10 @@
   const onSearch = (val: CustomEvent) => {
     search(val.detail);
   };
+
+  const openArtistPage = (artist: Artist) => {
+    modalStore.openModal(ArtistSide, { isSidebar: true, props: { artist } });
+  };
 </script>
 
 <div class="wrapper">
@@ -42,22 +50,13 @@
   <div class="artists">
     {#each artists as artist}
       <div class="artist__card">
-        <ArtistCard {artist} />
+        <ArtistCard {artist} on:select={() => openArtistPage(artist)} />
       </div>
     {/each}
   </div>
 
   <div class="tracks">
-    {#each tracks as track}
-      <div class="track__card">
-        <TrackCard
-          {track}
-          on:select={() => playerStore.setTrack(track, tracks)}
-          isLiked={playlistStore.isLiked(track, $playlistStore.likeds)}
-          isPlaying={$playerStore.track?.id === track.id}
-        />
-      </div>
-    {/each}
+    <TrackList {tracks} />
   </div>
 </div>
 
@@ -72,9 +71,6 @@
   }
   .tracks {
     margin-top: 12px;
-  }
-  .track__card + .track__card {
-    margin-top: 6px;
   }
   .artists {
     margin-top: 24px;

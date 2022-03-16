@@ -1,12 +1,16 @@
 <script lang="ts">
+  import { dataDir } from "@tauri-apps/api/path";
+
   import EntityCard from "../components/EntityCard.svelte";
   import TrackCard from "../components/TrackCard.svelte";
 
   import { homeStore } from "../store/home";
   import { modalStore } from "../store/modal";
   import { playerStore } from "../store/player";
+  import ArtistSide from "./ArtistSide.svelte";
   import MyWave from "./MyWave.svelte";
   import PlaylistSide from "./PlaylistSide.svelte";
+  import TrackList from "./TrackList.svelte";
 
   $: blocks = $homeStore.blocks;
 </script>
@@ -19,12 +23,9 @@
       <h3 class="entity__title">{block.title}</h3>
       {#if block.type === "chart"}
         <div class="chart">
-          {#each block.entities as entity}
-            <TrackCard
-              track={entity.data.track}
-              on:select={() => playerStore.setTrack(entity.data.track)}
-            />
-          {/each}
+          <TrackList
+            tracks={block.entities.map((entity) => entity.data.track)}
+          />
         </div>
       {:else if block.type === "personal-playlists"}
         <div class="entities">
@@ -158,7 +159,11 @@
                 <EntityCard
                   title={entity?.data.payload.name}
                   photo={entity?.data.payload.cover.uri}
-                  on:select={() => {}}
+                  on:select={() =>
+                    modalStore.openModal(ArtistSide, {
+                      isSidebar: true,
+                      props: { artist: entity?.data.payload },
+                    })}
                 />
               {:else if entity.data.context === "playlist"}
                 <EntityCard

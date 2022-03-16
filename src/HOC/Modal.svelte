@@ -23,7 +23,7 @@
     <div
       class="content"
       in:fly={{ x: 60, duration: 200, delay: 300, y: 0 }}
-      out:fly={{ x: -60, duration: 200, y: 0 }}
+      out:fly={{ x: 60, duration: 200, y: 0 }}
     >
       <svelte:component this={$modalStore.component} {...$modalStore.props} />
     </div>

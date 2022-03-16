@@ -6,6 +6,7 @@
   import { playerStore } from "../store/player";
 
   import { playlistStore } from "../store/playlist";
+  import TrackList from "./TrackList.svelte";
 
   export let playlistId: number;
 
@@ -33,28 +34,13 @@
   {/if}
 
   <div class="track_list">
-    {#each playlist?.tracks || [] as trackItem}
-      <div class="track__card">
-        <TrackCard
-          track={trackItem.track}
-          isPlaying={$playerStore.track?.id === trackItem.track.id}
-          isLiked={playlistStore.isLiked(
-            trackItem.track,
-            $playlistStore.likeds
-          )}
-          on:select={() => play(trackItem.track)}
-        />
-      </div>
-    {/each}
+    <TrackList tracks={playlist?.tracks.map((trackItem) => trackItem.track)} />
   </div>
 </div>
 
 <style>
   .wrapper {
     padding: 0 12px;
-  }
-  .track__card + .track__card {
-    margin-top: 6px;
   }
   .track_list {
     padding-bottom: 24px;

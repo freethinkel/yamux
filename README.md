@@ -8,10 +8,14 @@
 - [x] Liked songs & like track
 - [x] Generated playlists
 - [x] Radio stations
+- [x] Lyrics
+- [x] Artist info
+- [x] Search tracks & artists
+- [ ] Album info
 
+- [ ] Podcasts
 - [ ] Tracks caching
 - [ ] Settings
   - [ ] Color scheme
   - [ ] Appearance
   - [ ] Clear cache
-- [ ] Search tracks & artists

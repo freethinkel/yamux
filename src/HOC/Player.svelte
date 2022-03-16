@@ -1,5 +1,6 @@
 <script lang="ts">
   import { stationsStore } from "../store/stations";
+  import { modalStore } from "../store/modal";
 
   import { onDestroy, onMount } from "svelte";
   import Button from "../components/Button.svelte";
@@ -8,6 +9,7 @@
   import LikeBtn from "../components/LikeBtn.svelte";
   import Slider from "../components/Slider.svelte";
   import { ApiService } from "../services/api.service";
+  import ArtistSide from "../HOC/ArtistSide.svelte";
 
   import { playerStore } from "../store/player";
   import { playlistStore } from "../store/playlist";
@@ -152,7 +154,20 @@
       {$playerStore.track?.title || ""}
     </div>
     <div class="artists" data-tauri-drag-region>
-      {$playerStore.track?.artists?.map((e) => e.name)?.join(", ") || ""}
+      {#each $playerStore.track?.artists || [] as artist, index}
+        <span
+          class="artist"
+          on:click={() =>
+            modalStore.openModal(ArtistSide, {
+              isSidebar: true,
+              props: { artist },
+            })}
+          >{artist.name}
+          {#if index < $playerStore.track?.artists.length - 1}
+            ,
+          {/if}
+        </span>
+      {/each}
     </div>
   </div>
   <div class="right">
@@ -249,5 +264,8 @@
   .artists {
     font-size: 0.85rem;
     color: var(--base-text);
+  }
+  .artist {
+    cursor: pointer;
   }
 </style>

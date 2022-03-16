@@ -5,13 +5,16 @@ import type { PlayList } from "../models/playlist";
 import type { YandexMusicResponse } from "../models/yandex";
 import { getUserId, isAutorized } from "../store/auth";
 import type {
+  ArtistInfo,
   DownloadInfo,
   GetTracksResponse,
   ISearchOptions,
   LandingBlockType,
   LandingResponse,
   LikedTracksResponse,
+  Lyrics,
   SearchResponse,
+  Track,
   TrackDownloadInfo,
 } from "../models/types";
 import { ALL_LANDING_BLOCKS } from "../models/types";
@@ -150,6 +153,12 @@ export class ApiService {
     }
   }
 
+  static getLyrics(trackId: string | number) {
+    return httpRust.get<YandexMusicResponse<{ id: number; lyrics?: Lyrics }>>(
+      `${API_URL}/tracks/${trackId}/supplement`
+    );
+  }
+
   static async getLikedTracks() {
     const trackIds = await httpRust.get<LikedTracksResponse>(
       `${API_URL}/users/${getUserId()}/likes/tracks`
@@ -182,6 +191,19 @@ export class ApiService {
   static async getHomeData() {
     return this.getLanding(...ALL_LANDING_BLOCKS);
   }
+
+  static async getArtist(id: string | number) {
+    return httpRust.get<YandexMusicResponse<ArtistInfo>>(
+      `${API_URL}/artists/${id}/brief-info`
+    );
+  }
+
+  static getArtistTracks = (id: string | number) => {
+    return httpRust.get<YandexMusicResponse<{ tracks: Track[] }>>(
+      `${API_URL}/artists/${id}/tracks`,
+      { query: { "page-size": "200" } }
+    );
+  };
 
   static getStations() {
     return httpRust.get<{ result: { stations: Station[] } }>(
