@@ -34,7 +34,9 @@
   {/if}
 
   <div class="track_list">
-    <TrackList tracks={playlist?.tracks.map((trackItem) => trackItem.track)} />
+    <TrackList
+      tracks={playlist?.tracks?.map((trackItem) => trackItem.track) || []}
+    />
   </div>
 </div>
 
