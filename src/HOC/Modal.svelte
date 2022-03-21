@@ -18,7 +18,7 @@
       class="overlay"
       in:fade={{ duration: 100, delay: 200 }}
       out:fade={{ duration: 100 }}
-      on:click={() => modalStore.closeModal()}
+      on:click={() => !$modalStore.noClose && modalStore.closeModal()}
     />
     <div
       class="content"

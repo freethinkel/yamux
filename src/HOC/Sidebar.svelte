@@ -85,10 +85,12 @@
     </div>
   </div>
   <div class="profile">
-    <Button size="small" mode="outlined">
-      <Icon name="user" />
-      {$authStore.userName}
-    </Button>
+    {#if $authStore.userName}
+      <Button size="small" mode="outlined">
+        <Icon name="user" />
+        {$authStore.userName}
+      </Button>
+    {/if}
     <div class="logout__btn">
       <Button mode="outlined" size="small" on:click={() => authStore.logout()}>
         <Icon name="logout" />

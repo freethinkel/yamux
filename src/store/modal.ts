@@ -3,6 +3,7 @@ import { writable } from "svelte/store";
 const DEFAULT = {
   component: null,
   isSidebar: false,
+  noClose: false,
   props: {},
 };
 

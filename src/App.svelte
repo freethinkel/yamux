@@ -9,15 +9,26 @@
   import { playlistStore } from "./store/playlist";
   import { homeStore } from "./store/home";
   import { stationsStore } from "./store/stations";
+  import { playerStore } from "./store/player";
 
   onMount(() => {
     if (!$authStore.token) {
-      modalStore.openModal(AuthModal);
+      modalStore.openModal(AuthModal, { noClose: true });
     } else {
       playlistStore.getPlaylists();
       playlistStore.getLikedTracks();
       homeStore.getData();
       stationsStore.loadStations();
+
+      window.addEventListener("keydown", (event) => {
+        if (
+          (event.target as HTMLBodyElement).tagName.toLowerCase() === "body"
+        ) {
+          if (event.code.toLowerCase() === "space") {
+            playerStore.channel.emit("toggle", undefined);
+          }
+        }
+      });
     }
   });
 </script>
