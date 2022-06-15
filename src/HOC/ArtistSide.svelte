@@ -9,6 +9,7 @@
   import Tabs from "../components/Tabs.svelte";
   import Loader from "../components/Loader.svelte";
   import TrackList from "./TrackList.svelte";
+  import AlbumList from "../components/AlbumList.svelte";
 
   export let artist: Artist;
   let artistInfo: ArtistInfo = null;
@@ -71,6 +72,11 @@
               <TrackList tracks={allTracks || []} />
             {/if}
           {/if}
+          {#if tab === 2}
+            <div class="albums">
+              <AlbumList albums={artistInfo?.albums} />
+            </div>
+          {/if}
         </div>
       </Tabs>
     </div>
@@ -114,8 +120,8 @@
   .tab__body {
     height: 100%;
   }
-
-  .track__item {
-    margin-top: 12px;
+  .albums {
+    overflow: auto;
+    height: 100%;
   }
 </style>

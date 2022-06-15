@@ -10,6 +10,7 @@
   import { modalStore } from "../store/modal";
   import ArtistSide from "../HOC/ArtistSide.svelte";
   import LyricsSide from "../HOC/LyricsSide.svelte";
+  import AlbumSide from "../HOC/AlbumSide.svelte";
 
   export let track: Track;
   export let isLiked = false;
@@ -25,12 +26,24 @@
     {
       divider: true,
     },
-  ].concat(
-    track.artists.map((artist) => ({
-      id: `artist_${artist.id}`,
-      label: artist.name,
-    }))
-  );
+    {
+      groupName: "Испольнители",
+    },
+  ]
+    .concat(
+      track.artists.map((artist) => ({
+        id: `artist_${artist.id}`,
+        label: artist.name,
+      }))
+    )
+    .concat([{ divider: true }])
+    .concat([{ groupName: "Альбомы" }])
+    .concat(
+      track.albums.map((album) => ({
+        id: `album_${album.id}`,
+        label: album.title,
+      }))
+    );
 
   const onContextMenu = (id: string) => {
     if (id.indexOf("artist") === 0) {
@@ -48,6 +61,10 @@
         isSidebar: true,
         props: { track },
       });
+    } else if (id.indexOf("album") === 0) {
+      console.log(id);
+      const album = track.albums.find((a) => String(a.id) === id.split("_")[1]);
+      modalStore.openModal(AlbumSide, { isSidebar: true, props: { album } });
     }
   };
 </script>
@@ -143,6 +160,7 @@
     font-size: 1rem;
     font-weight: bold;
     color: var(--base-title);
+    text-align: left;
   }
   .artists {
     font-size: 0.85rem;

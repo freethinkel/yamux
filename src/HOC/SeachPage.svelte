@@ -1,21 +1,17 @@
 <script lang="ts">
-  import { modalStore } from "../store/modal";
-
-  import ArtistCard from "../components/ArtistCard.svelte";
-
   import Input from "../components/Input.svelte";
   import Loader from "../components/Loader.svelte";
-  import TrackCard from "../components/TrackCard.svelte";
   import type { Artist, Track } from "../models/types";
+  import type { Album } from "../models/album";
   import { ApiService } from "../services/api.service";
-  import { playerStore } from "../store/player";
-  import { playlistStore } from "../store/playlist";
-  import ArtistSide from "./ArtistSide.svelte";
   import TrackList from "./TrackList.svelte";
+  import AlbumList from "../components/AlbumList.svelte";
+  import ArtistList from "../components/ArtistList.svelte";
 
   let loading = false;
-  let tracks = [] as Track[];
-  let artists = [] as Artist[];
+  let tracks: Track[] = [];
+  let artists: Artist[] = [];
+  let albums: Album[] = [];
 
   const search = async (query: string) => {
     try {
@@ -23,6 +19,7 @@
       const res = await ApiService.search(query);
       tracks = res.data.result.tracks.results;
       artists = res.data.result.artists.results;
+      albums = res.data.result.albums.results;
     } catch (err) {
     } finally {
       loading = false;
@@ -31,10 +28,6 @@
 
   const onSearch = (val: CustomEvent) => {
     search(val.detail);
-  };
-
-  const openArtistPage = (artist: Artist) => {
-    modalStore.openModal(ArtistSide, { isSidebar: true, props: { artist } });
   };
 </script>
 
@@ -47,20 +40,37 @@
     </div>
   {/if}
 
-  <div class="artists">
-    {#each artists as artist}
-      <div class="artist__card">
-        <ArtistCard {artist} on:select={() => openArtistPage(artist)} />
-      </div>
-    {/each}
-  </div>
+  {#if artists.length}
+    <div class="artists">
+      <div class="section__title">Исполнители</div>
 
-  <div class="tracks">
-    <TrackList {tracks} />
-  </div>
+      <ArtistList {artists} columns={5} />
+    </div>
+  {/if}
+  {#if albums.length}
+    <div class="artists">
+      <div class="section__title">Альбомы</div>
+
+      <AlbumList {albums} columns={5} />
+    </div>
+  {/if}
+
+  {#if tracks.length}
+    <div class="tracks">
+      <div class="section__title">Альбомы</div>
+
+      <TrackList {tracks} />
+    </div>
+  {/if}
 </div>
 
 <style>
+  .section__title {
+    font-size: 1.5rem;
+    color: var(--base-title);
+    font-weight: bold;
+    width: 100%;
+  }
   .wrapper {
     padding: 12px 12px 24px;
   }

@@ -9,6 +9,7 @@
   import LikedPage from "./LikedPage.svelte";
   import SeachPage from "./SeachPage.svelte";
   import RadioPage from "./RadioPage.svelte";
+  import SettingsPage from "./SettingsPage.svelte";
   import Resizable from "../components/Resizable.svelte";
 
   let page = "home";
@@ -16,6 +17,7 @@
   $: currentPage = (() => {
     const _screen = {
       home: HomePage,
+      settings: SettingsPage,
       liked: LikedPage,
       search: SeachPage,
       radio: RadioPage,

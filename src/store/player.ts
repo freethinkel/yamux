@@ -6,6 +6,8 @@ const DEFAULT = {
   track: null as Track | null,
   queue: [] as Track[],
   params: {} as PlayParams,
+  miniMode: false,
+  alwaysOnTop: false,
 };
 
 type PlayParams = {
@@ -16,7 +18,6 @@ const store = writable(DEFAULT);
 
 export const playerStore = {
   subscribe: store.subscribe,
-  set: store.set,
   channel: new EventEmitter(),
   forwardQueue() {
     store.update((state) => {

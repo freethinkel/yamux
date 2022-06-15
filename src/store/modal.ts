@@ -1,31 +1,39 @@
+import type { SvelteComponent } from "svelte";
 import { writable } from "svelte/store";
 
-const DEFAULT = {
-  component: null,
-  isSidebar: false,
-  noClose: false,
-  props: {},
+type ModalEntry = {
+  component: null | typeof SvelteComponent;
+  isSidebar: boolean;
+  noClose: boolean;
+  props: Record<string | number, any>;
 };
 
-const store = writable({ ...DEFAULT });
+const store = writable<ModalEntry[]>([]);
 
 export const modalStore = {
   subscribe: store.subscribe,
   set: store.set,
   closeModal() {
-    store.set({ ...DEFAULT });
+    store.update((state) => {
+      if (state.length) {
+        state.pop();
+      }
+      return state;
+    });
   },
   openModal(
-    component: any,
-    options?: Partial<Omit<typeof DEFAULT, "component">>
+    component: typeof SvelteComponent,
+    options?: Partial<Omit<ModalEntry, "component">>
   ) {
     store.update((state) => {
-      state.component = component;
+      const entry: ModalEntry = { component } as ModalEntry;
       if (options) {
         Object.entries(options).forEach(([key, value]) => {
-          state[key] = value;
+          entry[key] = value;
         });
       }
+
+      state.push(entry);
       return state;
     });
   },

@@ -20,7 +20,7 @@ export const playlistStore = {
   async likeTrack(track: Track) {
     try {
       let isRemove = playlistStore.isLiked(track, get(store).likeds);
-      const res = await ApiService.likeAction("track", [track.id], isRemove);
+      await ApiService.likeAction("track", [track.id], isRemove);
       store.update((state) => {
         if (isRemove) {
           state.likeds = state.likeds.filter((t) => t.id !== track.id);

@@ -4,7 +4,7 @@
   import { modalStore } from "../store/modal";
 
   $: {
-    if ($modalStore.component) {
+    if ($modalStore.length) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -12,22 +12,24 @@
   }
 </script>
 
-{#if $modalStore.component}
-  <div class="wrapper" class:sidebar={$modalStore.isSidebar}>
-    <div
-      class="overlay"
-      in:fade={{ duration: 100, delay: 200 }}
-      out:fade={{ duration: 100 }}
-      on:click={() => !$modalStore.noClose && modalStore.closeModal()}
-    />
-    <div
-      class="content"
-      in:fly={{ x: 60, duration: 200, delay: 300, y: 0 }}
-      out:fly={{ x: 60, duration: 200, y: 0 }}
-    >
-      <svelte:component this={$modalStore.component} {...$modalStore.props} />
+{#if $modalStore.length}
+  {#each $modalStore as modalItem}
+    <div class="wrapper" class:sidebar={modalItem.isSidebar}>
+      <div
+        class="overlay"
+        in:fade={{ duration: 100, delay: 200 }}
+        out:fade={{ duration: 100 }}
+        on:click={() => !modalItem.noClose && modalStore.closeModal()}
+      />
+      <div
+        class="content"
+        in:fly={{ x: 60, duration: 200, delay: 300, y: 0 }}
+        out:fly={{ x: 60, duration: 200, y: 0 }}
+      >
+        <svelte:component this={modalItem.component} {...modalItem.props} />
+      </div>
     </div>
-  </div>
+  {/each}
 {/if}
 
 <style>

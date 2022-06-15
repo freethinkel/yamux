@@ -86,7 +86,11 @@
   </div>
   <div class="profile">
     {#if $authStore.userName}
-      <Button size="small" mode="outlined">
+      <Button
+        size="small"
+        mode={selectedPage === "settings" ? "raised" : "outlined"}
+        on:click={() => setPage("settings")}
+      >
         <Icon name="user" />
         {$authStore.userName}
       </Button>
@@ -176,6 +180,5 @@
   }
   .logout__btn {
     --button-color: var(--base-red);
-    --button-bg-color: transparent;
   }
 </style>

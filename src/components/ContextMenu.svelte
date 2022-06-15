@@ -4,11 +4,19 @@
         id: string | number;
         label: string;
         divider?: false | undefined;
+        groupName?: undefined;
       }
     | {
         id?: undefined;
         label?: undefined;
+        groupName?: undefined;
         divider: boolean;
+      }
+    | {
+        id?: undefined;
+        label?: undefined;
+        divider?: undefined;
+        groupName: string;
       };
 </script>
 
@@ -62,7 +70,7 @@
     window.removeEventListener("blur", close);
   });
 
-  const onClickBody = (event) => {
+  const onClickBody = (event: MouseEvent) => {
     if (popupRef.contains(event.target as HTMLElement)) return;
     close();
   };
@@ -108,6 +116,8 @@
         {#each options as option}
           {#if option.divider}
             <div class="divider" />
+          {:else if option.groupName}
+            <div class="group__name">{option.groupName}</div>
           {:else}
             <li>
               <button type="button" on:click={() => onSelect(option)}>
@@ -171,6 +181,11 @@
     width: calc(100% - 20px);
     border-bottom: 1px solid var(--base-overlay);
     margin: 4px 10px;
+  }
+  .group__name {
+    font-size: 0.8rem;
+    padding: 2px 10px;
+    font-weight: 600;
   }
   .popup ul button:hover,
   .popup ul button:focus {

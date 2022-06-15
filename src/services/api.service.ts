@@ -159,6 +159,12 @@ export class ApiService {
     );
   }
 
+  static async getAlbumTracks(id: number) {
+    return httpRust.get<YandexMusicResponse<any>>(
+      `${API_URL}/albums/${id}/with-tracks`
+    );
+  }
+
   static async getLikedTracks() {
     const trackIds = await httpRust.get<LikedTracksResponse>(
       `${API_URL}/users/${getUserId()}/likes/tracks`
