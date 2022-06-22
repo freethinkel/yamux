@@ -1,6 +1,6 @@
 [![Release](https://github.com/freethinkel/yamux/actions/workflows/release.yml/badge.svg)](https://github.com/freethinkel/yamux/actions/workflows/release.yml)
 
-# Неофициальный клиент Яндекс музыки на MacOS
+# Неофициальный клиент Яндекс музыки
 
 ### Roadmap
 
