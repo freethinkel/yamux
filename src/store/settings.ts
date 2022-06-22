@@ -8,11 +8,11 @@ const DEFAULT = {
 };
 
 const store = writable<typeof DEFAULT>(
-	StorageService.getItem('settings') || DEFAULT
+	StorageService.getItem('app_settings') || DEFAULT
 );
 
 store.subscribe((state) => {
-	StorageService.setItem('settings', state);
+	StorageService.setItem('app__settings', state);
 });
 
 export const settingsStore = {
