@@ -2,7 +2,7 @@
 
 use cocoa::{
   appkit::{NSToolbar, NSWindow, NSWindowStyleMask, NSWindowTitleVisibility},
-  base::{id, nil},
+  base::{id, nil, BOOL, YES, NO},
   foundation::NSAutoreleasePool,
 };
 
@@ -10,7 +10,7 @@ use cocoa::{
 pub fn apply_toolbar(window: id) {
   unsafe {
     let custom_toolbar = NSToolbar::alloc(nil).init_();
-    custom_toolbar.setShowsBaselineSeparator_(0);
+    custom_toolbar.setShowsBaselineSeparator_(NO);
     window.setToolbar_(custom_toolbar);
     let masks = window.styleMask()
       | NSWindowStyleMask::NSUnifiedTitleAndToolbarWindowMask
@@ -18,7 +18,7 @@ pub fn apply_toolbar(window: id) {
       | NSWindowStyleMask::NSBorderlessWindowMask;
 
     window.setStyleMask_(masks);
-    window.setTitlebarAppearsTransparent_(1);
+    window.setTitlebarAppearsTransparent_(YES);
     window.setTitleVisibility_(NSWindowTitleVisibility::NSWindowTitleHidden);
   }
 }
