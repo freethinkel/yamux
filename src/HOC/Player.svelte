@@ -8,8 +8,11 @@
 	import Icon from '../components/Icon.svelte';
 	import LikeBtn from '../components/LikeBtn.svelte';
 	import Slider from '../components/Slider.svelte';
+	import ContextMenu from '../components/ContextMenu.svelte';
 	import { ApiService } from '../services/api.service';
 	import ArtistSide from '../HOC/ArtistSide.svelte';
+	import LyricsSide from '../HOC/LyricsSide.svelte';
+	import AddToPlaylistModal from '../HOC/AddToPlaylistModal.svelte';
 
 	import { playerStore } from '../store/player';
 	import { playlistStore } from '../store/playlist';
@@ -137,86 +140,114 @@
 	};
 
 	$: trackPosition = currentDuration / (totalDuration || 1);
+
+	const cotextMenuOptions = [
+		{
+			label: 'Добавить в плейлист',
+			id: 'add-to-playlist',
+		},
+		{
+			label: 'Текст песни',
+			id: 'lyrics',
+		},
+	];
+	const onSelectContextMenu = (id: string) => {
+		if (id === 'add-to-playlist') {
+			modalStore.openModal(AddToPlaylistModal, {
+				props: { track: $playerStore.track },
+			});
+		} else if (id === 'lyrics') {
+			modalStore.openModal(LyricsSide, {
+				isSidebar: true,
+				props: { track: $playerStore.track },
+			});
+		}
+	};
 </script>
 
-<div class="wrapper" data-tauri-drag-region>
-	<div class="cover">
-		<Cover
-			scalable
-			pictureSize={300}
-			url={$playerStore.track?.coverUri}
-			size={50}
-		/>
-	</div>
-	<div class="controls">
-		<Button
-			mode="outlined"
-			disabled={$playerStore.params.isRadio}
-			size="small"
-			on:click={() => playerStore.backwardQueue()}
-			><Icon name="player-skip-back" /></Button
-		>
-		<Button
-			mode="outlined"
-			size="small"
-			on:click={() => {
-				audioEl.paused ? audioEl.play() : audioEl.pause();
-			}}
-		>
-			{#if isPlaying}
-				<Icon name="player-pause" />
-			{:else}
-				<Icon name="player-play" />
-			{/if}
-		</Button>
-		<Button mode="outlined" size="small" on:click={forwardQueue}
-			><Icon name="player-skip-forward" /></Button
-		>
-	</div>
-	<div class="content" data-tauri-drag-region>
-		<div class="title" data-tauri-drag-region>
-			{$playerStore.track?.title || ''}
+<ContextMenu
+	options={$playerStore.track && cotextMenuOptions}
+	on:select={({ detail }) => onSelectContextMenu(detail)}
+>
+	<div class="wrapper" data-tauri-drag-region>
+		<div class="cover">
+			<Cover
+				scalable
+				pictureSize={300}
+				url={$playerStore.track?.coverUri}
+				size={50}
+			/>
 		</div>
-		<div class="artists" data-tauri-drag-region>
-			{#each $playerStore.track?.artists || [] as artist, index}
-				<span
-					class="artist"
-					on:click={() =>
-						modalStore.openModal(ArtistSide, {
-							isSidebar: true,
-							props: { artist },
-						})}
-					>{artist.name}
-					{#if index < $playerStore.track?.artists.length - 1}
-						,
-					{/if}
-				</span>
-			{/each}
+		<div class="controls">
+			<Button
+				mode="outlined"
+				disabled={$playerStore.params.isRadio}
+				size="small"
+				on:click={() => playerStore.backwardQueue()}
+				><Icon name="player-skip-back" /></Button
+			>
+			<Button
+				mode="outlined"
+				size="small"
+				on:click={() => {
+					audioEl.paused ? audioEl.play() : audioEl.pause();
+				}}
+			>
+				{#if isPlaying}
+					<Icon name="player-pause" />
+				{:else}
+					<Icon name="player-play" />
+				{/if}
+			</Button>
+			<Button mode="outlined" size="small" on:click={forwardQueue}
+				><Icon name="player-skip-forward" /></Button
+			>
+		</div>
+		<div class="content" data-tauri-drag-region>
+			<div class="title" data-tauri-drag-region>
+				{$playerStore.track?.title || ''}
+			</div>
+			<div class="artists" data-tauri-drag-region>
+				{#each $playerStore.track?.artists || [] as artist, index}
+					<span
+						class="artist"
+						on:click={() =>
+							modalStore.openModal(ArtistSide, {
+								isSidebar: true,
+								props: { artist },
+							})}
+						>{artist.name}
+						{#if index < $playerStore.track?.artists.length - 1}
+							,
+						{/if}
+					</span>
+				{/each}
+			</div>
+		</div>
+		<div class="right">
+			<LikeBtn
+				active={$playlistStore.likeds.some(
+					(track) => track.id === $playerStore.track?.id
+				)}
+				on:click={() => {
+					playlistStore.likeTrack($playerStore.track);
+				}}
+			/>
+			<div class="time">
+				{getTime(currentDuration)} / {getTime(totalDuration)}
+			</div>
+		</div>
+		<audio controls bind:this={audioEl} />
+		<div class="position">
+			<div class="buffering" style:width={`${buffering * 100}%`} />
+			<Slider
+				disabled={totalDuration === 0}
+				position={trackPosition < buffering ? trackPosition : buffering}
+				on:change={({ detail }) => setPosition(detail)}
+			/>
 		</div>
 	</div>
-	<div class="right">
-		<LikeBtn
-			active={$playlistStore.likeds.some(
-				(track) => track.id === $playerStore.track?.id
-			)}
-			on:click={() => {
-				playlistStore.likeTrack($playerStore.track);
-			}}
-		/>
-		<div class="time">
-			{getTime(currentDuration)} / {getTime(totalDuration)}
-		</div>
-	</div>
-	<audio controls bind:this={audioEl} />
-	<div class="position">
-		<div class="buffering" style:width={`${buffering * 100}%`} />
-		<Slider
-			disabled={totalDuration === 0}
-			position={trackPosition < buffering ? trackPosition : buffering}
-			on:change={({ detail }) => setPosition(detail)}
-		/>
-	</div>
-</div>
+</ContextMenu>
 
 <style>
 	audio {
