@@ -11,11 +11,11 @@
 - [x] Lyrics
 - [x] Artist info
 - [x] Search tracks & artists
-- [ ] Album info
+- [x] Album info
 
 - [ ] Podcasts
 - [ ] Tracks caching
 - [ ] Settings
-  - [ ] Color scheme
+  - [x] Color scheme
   - [ ] Appearance
   - [ ] Clear cache
