@@ -8,7 +8,9 @@
 <div class="wrapper">
 	<div class="header">
 		<h1>Мне нравится</h1>
-		<p>Треков: {$playlistStore.likeds.length}</p>
+		{#if $playlistStore.likeds.length}
+			<p>Треков: {$playlistStore.likeds.length}</p>
+		{/if}
 	</div>
 
 	{#if !$playlistStore.likeds.length}

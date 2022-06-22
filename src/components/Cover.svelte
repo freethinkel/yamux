@@ -51,6 +51,7 @@
 	.scalable:hover img {
 		transform: scale(5);
 		border: 1px solid transparent;
+		border-radius: 3px;
 	}
 	.scalable:hover .overlay {
 		opacity: 0;
