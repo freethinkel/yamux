@@ -1,61 +1,61 @@
 :root {
-  --base-primary: rgba(231, 153, 25, 1);
-  --base-primary12: rgba(231, 153, 25, .12);
+	--base-primary: rgba(231, 153, 25, 1);
+	--base-primary12: rgba(231, 153, 25, 0.12);
 
-  --base-panel: rgba(245,245,245,0.9);
-  --base-border: rgba(0,0,0,.08);
-  --base-overlay: rgba(0,0,0,.08);
-  --base-background: white;
-  --base-text: #323232;
-  --base-title: #232323;
-  --base-subtitle: rgba(34, 34, 34, 0.5);
+	--base-panel: rgba(245, 245, 245, 0.9);
+	--base-border: rgba(0, 0, 0, 0.08);
+	--base-overlay: rgba(0, 0, 0, 0.08);
+	--base-background: white;
+	--base-text: #323232;
+	--base-title: #232323;
+	--base-subtitle: rgba(34, 34, 34, 0.5);
 
-  --base-red: rgba(255, 85, 85, 1);
+	--base-red: rgba(255, 85, 85, 1);
 
-  --base-shadow: box-shadow: 0 3px 6px rgba(0,0,0,.12);
+	--base-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
 
-  --border-radius: 8px;
-  --transition: 0.2s;
+	--border-radius: 8px;
+	--transition: 0.2s;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --base-primary: rgba(235, 168, 102, 1);
-    --base-primary12: rgba(235, 168, 102, .12);
+	:root {
+		--base-primary: rgba(235, 168, 102, 1);
+		--base-primary12: rgba(235, 168, 102, 0.12);
 
-    --base-panel: rgba(9,9,9,.9);
-    --base-border: rgba(255,255,255,.08);
-    --base-overlay: rgba(255,255,255,.16);
-    --base-background: black;
-    --base-text: #c3c3c3;
-    --base-title: #fff;
-    --base-subtitle: rgba(200, 200, 200, 0.5);
+		--base-panel: rgba(9, 9, 9, 0.9);
+		--base-border: rgba(255, 255, 255, 0.08);
+		--base-overlay: rgba(255, 255, 255, 0.16);
+		--base-background: black;
+		--base-text: #c3c3c3;
+		--base-title: #fff;
+		--base-subtitle: rgba(200, 200, 200, 0.5);
 
-    --base-red: rgba(255, 85, 85, 1);
+		--base-red: rgba(255, 85, 85, 1);
 
-    --base-shadow: box-shadow: 0 3px 6px rgba(200,200,200,.12);
+		--base-shadow: 0 3px 6px rgba(200, 200, 200, 0.12);
 
-    --border-radius: 8px;
-    --transition: 0.2s;
-  }
+		--border-radius: 8px;
+		--transition: 0.2s;
+	}
 }
 
 *,
 *::after,
 *::before {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 body,
 html {
-  margin: 0;
-  background-color: transparent;
-  font-family: "ibm plex sans", sans-serif;
-  color: var(--base-text);
-  font-size: 14px;
-  min-height: 100vh;
-  overflow: hidden;
-  -webkit-user-select: none;
-  user-select: none;
+	margin: 0;
+	background-color: transparent;
+	font-family: 'ibm plex sans', sans-serif;
+	color: var(--base-text);
+	font-size: 14px;
+	min-height: 100vh;
+	overflow: hidden;
+	-webkit-user-select: none;
+	user-select: none;
 }
 
 h1,
@@ -64,23 +64,23 @@ h3,
 h4,
 h5,
 h6 {
-  margin: 0;
-  padding: 0;
-  color: var(--base-title)
+	margin: 0;
+	padding: 0;
+	color: var(--base-title);
 }
 
 p {
-  margin: 0;
+	margin: 0;
 }
 
 .container {
-  max-width: 1000px;
-  padding: 0 12px;
-  margin: 0 auto;
-  width: 100%;
+	max-width: 1000px;
+	padding: 0 12px;
+	margin: 0 auto;
+	width: 100%;
 }
 
 .page {
-  padding-top: 24px;
-  padding-bottom: 32px;
+	padding-top: 24px;
+	padding-bottom: 32px;
 }

@@ -11,6 +11,8 @@ specifiers:
   axios: ^0.26.1
   crypto-js: ^4.1.1
   polished: ^4.2.2
+  prettier: ^2.7.1
+  prettier-plugin-svelte: ^2.7.0
   smoothscroll-polyfill: ^0.4.4
   svelte: ^3.44.0
   svelte-check: ^2.2.7
@@ -30,9 +32,11 @@ dependencies:
 devDependencies:
   '@sveltejs/vite-plugin-svelte': 1.0.0-next.49_svelte@3.48.0+vite@2.9.12
   '@tauri-apps/cli': 1.0.0
-  '@tauri-apps/tauricon': github.com/tauri-apps/tauricon/f104e2af7a19e1cdf9ee8212d2d3f6456d3aa00f
+  '@tauri-apps/tauricon': github.com/tauri-apps/tauricon/74754209ec23822a43d0903693a62e58a3bb152e
   '@tsconfig/svelte': 2.0.1
   '@types/crypto-js': 4.1.1
+  prettier: 2.7.1
+  prettier-plugin-svelte: 2.7.0_nakrehnrzdf7fdea5k3a4dfy4m
   svelte: 3.48.0
   svelte-check: 2.7.2_svelte@3.48.0
   svelte-preprocess: 4.10.7_dg7s4kx4gpzom5ifrkhkr632g4
@@ -2041,8 +2045,8 @@ packages:
       slash: 4.0.0
     dev: true
 
-  /got/12.0.4:
-    resolution: {integrity: sha512-2Eyz4iU/ktq7wtMFXxzK7g5p35uNYLLdiZarZ5/Yn3IJlNEpBd5+dCgcAyxN8/8guZLszffwe3wVyw+DEVrpBg==}
+  /got/12.1.0:
+    resolution: {integrity: sha512-hBv2ty9QN2RdbJJMK3hesmSkFTjVIHyIDDbssCKnSmq62edGgImJWD10Eb1k77TiV1bxloxqcFAVK8+9pkhOig==}
     engines: {node: '>=14.16'}
     dependencies:
       '@sindresorhus/is': 4.6.0
@@ -3253,6 +3257,22 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
+  /prettier-plugin-svelte/2.7.0_nakrehnrzdf7fdea5k3a4dfy4m:
+    resolution: {integrity: sha512-fQhhZICprZot2IqEyoiUYLTRdumULGRvw0o4dzl5jt0jfzVWdGqeYW27QTWAeXhoupEZJULmNoH3ueJwUWFLIA==}
+    peerDependencies:
+      prettier: ^1.16.4 || ^2.0.0
+      svelte: ^3.2.0
+    dependencies:
+      prettier: 2.7.1
+      svelte: 3.48.0
+    dev: true
+
+  /prettier/2.7.1:
+    resolution: {integrity: sha512-ujppO+MkdPqoVINuDFDRLClm7D78qbDt0/NR+wp5FqEZOoTNAjPHWj17QRhu7geIHJfcNhRk1XVQmF8Bp3ye+g==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
+    dev: true
+
   /process-nextick-args/2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
     dev: true
@@ -4305,8 +4325,8 @@ packages:
       logalot: 2.1.0
     dev: true
 
-  github.com/tauri-apps/tauricon/f104e2af7a19e1cdf9ee8212d2d3f6456d3aa00f:
-    resolution: {tarball: https://codeload.github.com/tauri-apps/tauricon/tar.gz/f104e2af7a19e1cdf9ee8212d2d3f6456d3aa00f}
+  github.com/tauri-apps/tauricon/74754209ec23822a43d0903693a62e58a3bb152e:
+    resolution: {tarball: https://codeload.github.com/tauri-apps/tauricon/tar.gz/74754209ec23822a43d0903693a62e58a3bb152e}
     name: '@tauri-apps/tauricon'
     version: 1.0.2
     engines: {node: '>= 12.13.0', npm: '>= 6.6.0', yarn: '>= 1.19.1'}
@@ -4320,7 +4340,7 @@ packages:
       fs-extra: 10.1.0
       glob: 8.0.3
       global-agent: 3.0.0
-      got: 12.0.4
+      got: 12.1.0
       imagemin: 8.0.1
       imagemin-optipng: 8.0.0
       imagemin-zopfli: 7.0.0

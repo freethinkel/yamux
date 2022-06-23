@@ -42,7 +42,6 @@ export const httpRust = {
 		data: T;
 	}> => {
 		const client = await getClient();
-		console.log('GET', url);
 		return await client.get(url, {
 			...(config || {}),
 			headers: { ...((config || {}).headers || {}), ...headers },
@@ -56,7 +55,6 @@ export const httpRust = {
 		data: T;
 	}> => {
 		const client = await getClient();
-		console.log('POST', url);
 		return await client.post(url, body, {
 			...(config || {}),
 			headers: { ...((config || {}).headers || {}), ...headers },

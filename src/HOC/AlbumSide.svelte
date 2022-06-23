@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { ApiService } from "../services/api.service";
+  import { ApiService } from '../services/api.service';
 
-  import { onMount } from "svelte";
+  import { onMount } from 'svelte';
 
-  import Cover from "../components/Cover.svelte";
-  import type { Album } from "../models/album";
-  import type { Track } from "../models/types";
-  import TrackList from "./TrackList.svelte";
-  import Loader from "../components/Loader.svelte";
+  import Cover from '../components/Cover.svelte';
+  import type { Album } from '../models/album';
+  import type { Track } from '../models/types';
+  import TrackList from './TrackList.svelte';
+  import Loader from '../components/Loader.svelte';
 
   export let album: Album;
 

@@ -6,7 +6,7 @@ import { ApiService } from '../services/api.service';
 const DEFAULT = {
 	cached: {} as Record<number, Track[]>,
 	playlists: [] as PlayList[],
-	likeds: [] as Track[],
+	likedTracks: [] as Track[],
 };
 
 const store = writable(DEFAULT);
@@ -14,8 +14,8 @@ const store = writable(DEFAULT);
 export const playlistStore = {
 	subscribe: store.subscribe,
 	set: store.set,
-	isLiked(track: Track, likeds: Track[]) {
-		return likeds.some((t) => t.id === track.id);
+	isLiked(track: Track, likedTracks: Track[]) {
+		return likedTracks.some((t) => t.id === track.id);
 	},
 	async addTrack(kind: number, track: Track) {
 		const playlist = get(store).playlists.find(
@@ -50,7 +50,7 @@ export const playlistStore = {
 			);
 			return state;
 		});
-		this.getTracks(kind);
+		await this.getTracks(kind);
 	},
 	async removeTrackFromPlaylist(kind: number, track: Track) {
 		const playlist = get(store).playlists.find(
@@ -67,7 +67,7 @@ export const playlistStore = {
 			return state;
 		});
 
-		const res = await ApiService.removeTrackFromPlaylist(
+		await ApiService.removeTrackFromPlaylist(
 			kind,
 			playlist.revision,
 			[{ id: track.id, albumId: String(track.albums[0].id) }],
@@ -79,13 +79,13 @@ export const playlistStore = {
 	},
 	async likeTrack(track: Track) {
 		try {
-			let isRemove = playlistStore.isLiked(track, get(store).likeds);
+			let isRemove = playlistStore.isLiked(track, get(store).likedTracks);
 			await ApiService.likeAction('track', [track.id], isRemove);
 			store.update((state) => {
 				if (isRemove) {
-					state.likeds = state.likeds.filter((t) => t.id !== track.id);
+					state.likedTracks = state.likedTracks.filter((t) => t.id !== track.id);
 				} else {
-					state.likeds = [track, ...state.likeds];
+					state.likedTracks = [track, ...state.likedTracks];
 				}
 				return state;
 			});
@@ -97,14 +97,14 @@ export const playlistStore = {
 	async getLikedTracks() {
 		const res = await ApiService.getLikedTracks();
 		store.update((state) => {
-			state.likeds = res.result;
+			state.likedTracks = res.result;
 			return state;
 		});
 	},
 	async getTracks(kind: number) {
 		const playlists = get(store).playlists;
-		const currentPlaylsit = playlists.find((p) => p.kind === kind);
-		if (!currentPlaylsit.tracks) {
+		const currentPlaylist = playlists.find((p) => p.kind === kind);
+		if (!currentPlaylist.tracks) {
 			const res = await ApiService.getPlaylistInfo(kind);
 			store.update((state) => {
 				state.playlists = state.playlists.map((p) =>
