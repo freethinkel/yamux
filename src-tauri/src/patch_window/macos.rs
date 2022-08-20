@@ -1,7 +1,7 @@
 #![cfg(target_os = "macos")]
 
 use cocoa::{
-  appkit::{NSToolbar, NSWindow, NSWindowStyleMask, NSWindowTitleVisibility},
+  appkit::{NSToolbar, NSWindow, NSWindowStyleMask, NSWindowTitleVisibility, NSVisualEffectState},
   base::{id, nil, BOOL, YES, NO},
   foundation::NSAutoreleasePool,
 };
@@ -22,3 +22,12 @@ pub fn apply_toolbar(window: id) {
     window.setTitleVisibility_(NSWindowTitleVisibility::NSWindowTitleHidden);
   }
 }
+
+#[allow(deprecated)]
+pub fn apply_fix_blur(window: id) {
+  unsafe {
+    window.setState_(NSVisualEffectState::Active);
+  }
+}
+
+

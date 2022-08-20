@@ -12,7 +12,7 @@ use tauri::{window, Manager, Menu};
 use window_vibrancy::{apply_blur, apply_vibrancy, NSVisualEffectMaterial};
 
 #[cfg(target_os = "macos")]
-use crate::patch_window::Toolbar;
+use crate::patch_window::PatchWindow;
 
 fn main() {
   let ctx = tauri::generate_context!();
@@ -31,6 +31,7 @@ fn main() {
       apply_vibrancy(&window, NSVisualEffectMaterial::UnderWindowBackground)
         .expect("Unsupported platform! 'apply_vibrancy' is only supported on macOS");
       window.apply_toolbar();
+      window.apply_fix_blur();
     }
 
     Ok(())

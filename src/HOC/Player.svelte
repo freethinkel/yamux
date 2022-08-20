@@ -324,12 +324,15 @@
     padding: 0;
     position: relative;
     padding: 0 8px;
-    padding-bottom: 2px;
+    padding-bottom: 7px;
+    backdrop-filter: blur(9px);
+    -webkit-backdrop-filter: blur(9px);
+    z-index: 100;
   }
 
   .position {
     position: absolute;
-    bottom: 0;
+    bottom: 5px;
     left: 0;
     width: 100%;
     z-index: 200;
@@ -345,7 +348,7 @@
     transition: 0.1s ease-in width;
     left: 0;
     top: 0;
-    z-index: 100;
+    z-index: 1;
   }
 
   .controls {

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher, onMount } from "svelte";
+  import { createEventDispatcher, onMount } from 'svelte';
 
   export let position = 0;
   export let disabled = false;
@@ -33,19 +33,19 @@
     }
   };
   const onMouseUp = () => {
-    dispatch("change", _position);
+    dispatch('change', _position);
     setTimeout(() => {
       isMouseDown = false;
     }, 100);
-    document.removeEventListener("mousemove", onMouseMove);
-    document.removeEventListener("mouseup", onMouseUp);
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
   };
   const onMouseDown = () => {
     if (!disabled) {
       isMouseDown = true;
-      document.addEventListener("mousemove", onMouseMove);
+      document.addEventListener('mousemove', onMouseMove);
 
-      document.addEventListener("mouseup", onMouseUp);
+      document.addEventListener('mouseup', onMouseUp);
     }
   };
 
@@ -55,7 +55,7 @@
       let pos = (e.clientX - rect.left) / wrapperEl.offsetWidth;
       _position = pos;
 
-      dispatch("change", _position);
+      dispatch('change', _position);
     }
   };
 </script>
@@ -79,14 +79,13 @@
   .wrapper {
     position: relative;
     cursor: pointer;
+    z-index: 100;
   }
   .track {
     position: absolute;
     height: 5px;
     width: 100%;
     background-color: var(--base-overlay);
-    backdrop-filter: blur(9px);
-    -webkit-backdrop-filter: blur(9px);
   }
   .progress {
     height: 100%;

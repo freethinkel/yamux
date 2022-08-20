@@ -4,13 +4,20 @@ pub mod macos;
 use tauri::Window as TauriWindow;
 
 
-pub trait Toolbar {
+pub trait PatchWindow {
   #[cfg(target_os = "macos")]
   fn apply_toolbar(&self);
+
+  #[cfg(target_os = "macos")]
+  fn apply_fix_blur(&self);
 }
 
 
-impl Toolbar for TauriWindow {
+impl PatchWindow for TauriWindow {
+  #[cfg(target_os = "macos")]
+  fn apply_fix_blur(&self) {
+      macos::apply_fix_blur(self.ns_window().unwrap() as _);
+  }
 
   #[cfg(target_os = "macos")]
   fn apply_toolbar(&self) {
