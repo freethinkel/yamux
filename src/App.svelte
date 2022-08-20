@@ -16,6 +16,7 @@
   const generateStyle = (color: string) => {
     return `
       :root {
+        --base-text: red;
         --base-primary: ${color};
         --base-primary12: ${rgba(color, 0.12)};
       }
