@@ -1,6 +1,6 @@
 [package]
 name = "yamux"
-version = "0.1.5"
+version = "0.1.6"
 description = "Yandex music desktop client"
 authors = ["freethinkel"]
 license = ""
