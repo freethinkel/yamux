@@ -12,11 +12,11 @@
   import { settingsStore } from './store/settings';
   import { get } from 'svelte/store';
   import { rgba } from 'polished';
+  import { platform } from '@tauri-apps/api/os';
 
   const generateStyle = (color: string) => {
     return `
       :root {
-        --base-text: red;
         --base-primary: ${color};
         --base-primary12: ${rgba(color, 0.12)};
       }
@@ -24,6 +24,12 @@
   };
 
   onMount(() => {
+    platform().then((platform) => {
+      if (platform !== 'darwin') {
+        document.body.style.background = 'var(--base-background)';
+      }
+    });
+
     const settingsStyle = document.createElement('style');
     settingsStyle.innerHTML = generateStyle(
       get(settingsStore).theme.primaryColor

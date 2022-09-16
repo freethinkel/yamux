@@ -39,14 +39,16 @@ fn main() {
 
   #[cfg(target_os = "macos")]
   {
-    app = app.menu(
-      Menu::new()
-        .add_default_app_submenu_if_macos(&ctx.package_info().name)
-        .add_default_file_submenu()
-        .add_default_edit_submenu()
-        .add_default_view_submenu()
-        .add_default_window_submenu(),
-    );
+    app = app
+      .menu(
+        Menu::new()
+          .add_default_app_submenu_if_macos(&ctx.package_info().name)
+          .add_default_file_submenu()
+          .add_default_edit_submenu()
+          .add_default_view_submenu()
+          .add_default_window_submenu(),
+      )
+      .on_menu_event(menu::handle_menu_event);
   }
 
   app.run(ctx).expect("error while running tauri application");

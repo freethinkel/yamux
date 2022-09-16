@@ -1,8 +1,8 @@
 #![cfg(target_os = "macos")]
 
 use cocoa::{
-  appkit::{NSToolbar, NSWindow, NSWindowStyleMask, NSWindowTitleVisibility, NSVisualEffectState},
-  base::{id, nil, BOOL, YES, NO},
+  appkit::{NSToolbar, NSWindow, NSWindowStyleMask, NSWindowTitleVisibility},
+  base::{id, nil, BOOL, NO, YES},
   foundation::NSAutoreleasePool,
 };
 
@@ -26,8 +26,6 @@ pub fn apply_toolbar(window: id) {
 #[allow(deprecated)]
 pub fn apply_fix_blur(window: id) {
   unsafe {
-    window.setState_(NSVisualEffectState::Active);
+    // window.setState_(NSVisualEffectState::Active);
   }
 }
-
-
