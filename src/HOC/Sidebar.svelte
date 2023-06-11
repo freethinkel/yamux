@@ -124,7 +124,7 @@
         on:click={() => setPage('settings')}
       >
         <Icon name="user" />
-        {$authStore.userName}
+        <div class="profile__name">{$authStore.userName}</div>
       </Button>
     {/if}
     <div class="logout__btn">
@@ -238,6 +238,18 @@
     padding: 12px 8px;
     --button-padding: 18px 6px;
     --button-gap: 6px;
+  }
+  .profile :global(button) {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  .profile__name {
+    flex: 1;
+    min-width: 0;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
   .logout__btn {
     --button-color: var(--base-red);

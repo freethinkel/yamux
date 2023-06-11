@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let style: string = "";
+  export let style: string = '';
 </script>
 
 <div data-tauri-drag-region {style}>

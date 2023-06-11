@@ -1,26 +1,17 @@
 <script lang="ts">
-  import Card from "../components/Card.svelte";
-  import Button from "../components/Button.svelte";
-  import Input from "../components/Input.svelte";
-  import Loader from "../components/Loader.svelte";
-  import { authStore } from "../store/auth";
+  import Card from '../components/Card.svelte';
+  import Button from '../components/Button.svelte';
+  import Input from '../components/Input.svelte';
+  import Loader from '../components/Loader.svelte';
+  import { authStore } from '../store/auth';
 
-  const form = {
-    login: "",
-    password: "",
-  };
   let loading = false;
-  let error = "";
-
-  const onChangeForm = (field: keyof typeof form) => (value: CustomEvent) => {
-    error = "";
-    form[field] = value.detail;
-  };
+  let error = '';
 
   const onSubmit = async () => {
     try {
       loading = true;
-      await authStore.login(form.login, form.password);
+      await authStore.login();
       window.location.reload();
     } catch (err) {
       const data = err?.response?.data || {};
@@ -36,35 +27,9 @@
 <div class="wrapper">
   <Card>
     <h2>Авторизация</h2>
-    <form on:submit|preventDefault={onSubmit}>
-      <Input
-        value={form.login}
-        on:input={onChangeForm("login")}
-        label="Логин"
-        placeholder="Введите логин"
-      />
-      <Input
-        value={form.password}
-        on:input={onChangeForm("password")}
-        label="Пароль"
-        placeholder="Введите пароль"
-        type="password"
-      />
-      <div class="footer">
-        {#if loading}
-          <div class="loading">
-            <Loader message="Авторизация.." />
-          </div>
-        {/if}
-        {#if error}
-          <span class="error_message">{error}</span>
-        {/if}
-        <Button
-          disabled={Boolean(error || loading || !(form.login && form.password))}
-          type="submit">Войти</Button
-        >
-      </div>
-    </form>
+    <div class="body">
+      <Button on:click={() => onSubmit()}>Войти</Button>
+    </div>
   </Card>
 </div>
 
@@ -76,28 +41,15 @@
   h2 {
     margin-bottom: 4px;
   }
-
-  form {
+  .body {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .footer {
-    margin-top: 12px;
-    display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
+    padding-top: 12px;
   }
-  .loading {
-    flex-grow: 1;
-    padding-right: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
-  .error_message {
-    flex-grow: 1;
-    color: var(--base-red);
+  .body :global(button) {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
   }
 </style>

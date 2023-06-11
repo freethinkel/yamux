@@ -186,7 +186,7 @@
   options={$playerStore.track && cotextMenuOptions}
   on:select={({ detail }) => onSelectContextMenu(detail)}
 >
-  <div class="wrapper" data-tauri-drag-region>
+  <div class="wrapper">
     <div class="cover">
       <Cover
         scalable

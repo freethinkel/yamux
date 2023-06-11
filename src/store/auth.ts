@@ -1,6 +1,6 @@
-import { get, writable } from "svelte/store";
-import { ApiService, httpRust } from "../services/api.service";
-import { StorageService } from "../services/storage.service";
+import { get, writable } from 'svelte/store';
+import { ApiService, httpRust } from '../services/api.service';
+import { StorageService } from '../services/storage.service';
 
 const DEFAULT = {
   token: null as null | string,
@@ -9,7 +9,7 @@ const DEFAULT = {
 };
 
 const store = writable(
-  (StorageService.getItem("authStore") as typeof DEFAULT) || { ...DEFAULT }
+  (StorageService.getItem('authStore') as typeof DEFAULT) || { ...DEFAULT }
 );
 
 store.subscribe((data) => {
@@ -17,18 +17,22 @@ store.subscribe((data) => {
     Authorization: `OAuth ${data.token}`,
   });
 
-  StorageService.setItem("authStore", data);
+  StorageService.setItem('authStore', data);
 });
 
 export const authStore = {
   subscribe: store.subscribe,
   set: store.set,
-  async login(login: string, password: string) {
-    const res = await ApiService.auth(login, password);
+  async login() {
+    const res: any = await ApiService.auth().catch(console.log);
+    httpRust.setHeaders({
+      Authorization: `OAuth ${res.data.access_token}`,
+    });
+    const resUser: any = await ApiService.getAccountStatus().catch(console.log);
     store.update((state) => {
       state.token = res.data.access_token;
-      state.userId = res.data.uid;
-      state.userName = login;
+      state.userId = resUser.data.result.account.uid;
+      state.userName = resUser.data.result.account.login;
       return state;
     });
 

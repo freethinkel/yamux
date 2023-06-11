@@ -1,5 +1,4 @@
 {
-  "$schema": "../node_modules/@tauri-apps/cli/schema.json",
   "build": {
     "beforeBuildCommand": "npm run build",
     "beforeDevCommand": "npm run dev",
@@ -9,7 +8,7 @@
   },
   "package": {
     "productName": "Yamux",
-    "version": "0.1.6"
+    "version": "0.1.7"
   },
   "tauri": {
     "macOSPrivateApi": true,
@@ -19,6 +18,17 @@
         "all": true,
         "request": true,
         "scope": ["https://**"]
+      },
+      "fs": {
+        "all": true,
+        "scope": ["**"]
+      },
+      "path": {
+        "all": true
+      },
+      "shell": {
+        "all": true,
+        "open": true
       }
     },
     "bundle": {
