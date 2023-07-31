@@ -7,8 +7,11 @@ mod patch_window;
 
 mod menu;
 
+#[cfg(target_os = "macos")]
 use cocoa::{appkit::NSWindow, base::id};
+#[cfg(target_os = "macos")]
 use objc::runtime::YES;
+#[cfg(target_os = "macos")]
 use patch_window::macos::ToolbarThickness;
 use serde::{Deserialize, Serialize};
 use tauri::{AppHandle, Manager, WindowBuilder, WindowUrl};
