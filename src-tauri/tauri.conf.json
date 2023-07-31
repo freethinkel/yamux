@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "Yamux",
-    "version": "0.1.7"
+    "version": "0.1.8"
   },
   "tauri": {
     "macOSPrivateApi": true,
@@ -17,15 +17,11 @@
       "http": {
         "all": true,
         "request": true,
-        "scope": [
-          "https://**"
-        ]
+        "scope": ["https://**"]
       },
       "fs": {
         "all": true,
-        "scope": [
-          "**"
-        ]
+        "scope": ["**"]
       },
       "path": {
         "all": true
