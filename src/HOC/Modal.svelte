@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { fade, fly } from "svelte/transition";
+  import { fade, fly } from 'svelte/transition';
 
-  import { modalStore } from "../store/modal";
+  import { modalStore } from '../store/modal';
 
   $: {
     if ($modalStore.length) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = "";
+      document.body.style.overflow = '';
     }
   }
 </script>
@@ -15,6 +15,8 @@
 {#if $modalStore.length}
   {#each $modalStore as modalItem}
     <div class="wrapper" class:sidebar={modalItem.isSidebar}>
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-static-element-interactions -->
       <div
         class="overlay"
         in:fade={{ duration: 100, delay: 200 }}

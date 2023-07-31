@@ -54,4 +54,4 @@ export const authStore = {
 
 export const getUserId = () => get(authStore).userId;
 
-export const isAutorized = (): boolean => !!get(authStore).token;
+export const isAuthorized = (): boolean => !!get(authStore).token;

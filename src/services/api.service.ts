@@ -3,7 +3,7 @@ import { http, invoke } from '@tauri-apps/api';
 import { API_URL } from '../config';
 import type { PlayList } from '../models/playlist';
 import type { YandexMusicResponse } from '../models/yandex';
-import { getUserId, isAutorized } from '../store/auth';
+import { getUserId, isAuthorized } from '../store/auth';
 import type {
   ArtistInfo,
   DownloadInfo,
@@ -23,7 +23,7 @@ import crypto from 'crypto-js';
 import { querystring } from '../helpers';
 import type { FeedbackParams, Sequence, Station } from '../models/station';
 import { WindowManager } from '@tauri-apps/api/window';
-import { UnlistenFn, listen } from '@tauri-apps/api/event';
+import { listen, type UnlistenFn } from '@tauri-apps/api/event';
 
 export const httpClient = axios.create();
 
@@ -229,7 +229,7 @@ export class ApiService {
       )
     ).data.result;
 
-    const info = isAutorized()
+    const info = isAuthorized()
       ? result.find((item) => item.codec === 'mp3' && !item.preview)
       : result[0];
 

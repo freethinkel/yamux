@@ -56,6 +56,7 @@
     on:select={({ detail }) => !isRename && onContextMenu(detail)}
   >
     {#if isRename}
+      <!-- svelte-ignore a11y-autofocus -->
       <input
         bind:value={renameValue}
         autofocus

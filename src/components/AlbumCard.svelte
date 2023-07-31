@@ -1,15 +1,17 @@
 <script lang="ts">
-  import type { Album } from "src/models/album";
-  import { createEventDispatcher } from "svelte";
-  import Card from "./Card.svelte";
-  import Cover from "./Cover.svelte";
+  import type { Album } from 'src/models/album';
+  import { createEventDispatcher } from 'svelte';
+  import Card from './Card.svelte';
+  import Cover from './Cover.svelte';
 
   export let album: Album;
 
   const dispatch = createEventDispatcher();
 </script>
 
-<div class="wrapper" on:click={() => dispatch("select")}>
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<div class="wrapper" on:click={() => dispatch('select')}>
   <Card>
     <div class="cover">
       <Cover url={album.coverUri} size={100} />

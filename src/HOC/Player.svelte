@@ -227,6 +227,8 @@
       </div>
       <div class="artists" data-tauri-drag-region>
         {#each $playerStore.track?.artists || [] as artist, index}
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
           <span
             class="artist"
             on:click={() =>

@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { fly } from "svelte/transition";
+  import { fly } from 'svelte/transition';
 
-  export let position: "bottom" | "top" = "bottom";
-  export let description: string = "";
+  export let position: 'bottom' | 'top' = 'bottom';
+  export let description: string = '';
 
   export let maxWidth = 300;
   let popupRef: HTMLDivElement;
@@ -24,13 +24,14 @@
       popupRef.style.top = `${rect.y + rect.height + offset}px`;
 
       if (popupRef.clientWidth > window.innerWidth - rect.left - offset) {
-        popupRef.style.left = "auto";
+        popupRef.style.left = 'auto';
         popupRef.style.right = `${window.innerWidth - rect.right}px`;
       }
     });
   };
 </script>
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   class="wrapper"
   bind:this={wrapperRef}
@@ -45,8 +46,8 @@
       class="popup"
       bind:this={popupRef}
       style={`max-width: ${maxWidth}px;`}
-      class:position__bottom={position === "bottom"}
-      class:position__top={position === "top"}
+      class:position__bottom={position === 'bottom'}
+      class:position__top={position === 'top'}
     >
       {description}
     </div>

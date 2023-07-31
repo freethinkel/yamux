@@ -104,17 +104,18 @@
   };
 </script>
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   class="wrapper"
   on:contextmenu|preventDefault|stopPropagation={onContextMenu}
 >
   <slot />
   {#if isOpen}
-    <!-- svelte-ignore a11y-positive-tabindex -->
     <!-- svelte-ignore a11y-autofocus -->
+    <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
     <div
       class="popup"
-      tabindex="0 "
+      tabindex="0"
       autofocus
       bind:this={popupRef}
       on:contextmenu|preventDefault|stopPropagation

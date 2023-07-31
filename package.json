@@ -10,26 +10,25 @@
     "tauri": "tauri"
   },
   "dependencies": {
-    "@tauri-apps/api": "^1.2.0",
-    "@types/node": "^12.0.0",
+    "@tauri-apps/api": "^1.4.0",
     "axios": "^0.26.1",
     "crypto-js": "^4.1.1",
     "polished": "^4.2.2",
     "smoothscroll-polyfill": "^0.4.4"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.30",
-    "@tauri-apps/cli": "^1.2.3",
+    "@types/node": "^16.0.0",
+    "@sveltejs/vite-plugin-svelte": "^2.0.0",
+    "@tauri-apps/cli": "^1.4.0",
     "@tauri-apps/tauricon": "github:tauri-apps/tauricon",
-    "@tsconfig/svelte": "^2.0.1",
+    "@tsconfig/svelte": "^5.0.0",
     "@types/crypto-js": "^4.1.0",
     "prettier": "^2.7.1",
     "prettier-plugin-svelte": "^2.7.0",
-    "svelte": "^3.44.0",
-    "svelte-check": "^2.2.7",
-    "svelte-preprocess": "^4.9.8",
-    "tslib": "^2.3.1",
+    "svelte": "^4.1.2",
+    "svelte-check": "^3.4.6",
+    "tslib": "^2.6.1",
     "typescript": "^4.4.4",
-    "vite": "^2.7.2"
+    "vite": "^4.4.7"
   }
 }

@@ -61,9 +61,12 @@
 </script>
 
 <div class="wrapper" bind:this={wrapperEl}>
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div class="track" on:click={setPosition}>
     <div class="progress" style={`width: ${_position * 100}%`} />
   </div>
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
   <div
     class="point"
     on:mousedown={onMouseDown}

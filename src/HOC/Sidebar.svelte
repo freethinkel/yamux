@@ -90,6 +90,7 @@
       <ul>
         {#if isCreate}
           <li>
+            <!-- svelte-ignore a11y-autofocus -->
             <input
               class="create-playlist-input"
               type="text"

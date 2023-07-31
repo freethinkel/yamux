@@ -1,15 +1,21 @@
 <script lang="ts">
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher } from 'svelte';
 
-  import type { Artist } from "../models/types";
-  import Cover from "./Cover.svelte";
+  import type { Artist } from '../models/types';
+  import Cover from './Cover.svelte';
 
   export let artist: Artist;
 
   const dispatch = createEventDispatcher();
 </script>
 
-<div class="wrapper" on:click={() => dispatch("select")}>
+<div
+  class="wrapper"
+  role="button"
+  tabindex="0"
+  on:keydown={() => null}
+  on:click={() => dispatch('select')}
+>
   <div class="photo">
     <Cover url={artist.cover?.uri} size={75} />
   </div>

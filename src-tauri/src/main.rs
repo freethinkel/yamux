@@ -5,16 +5,15 @@
 
 mod patch_window;
 
-use crate::menu::AddDefaultSubmenus;
 mod menu;
 
 use cocoa::{appkit::NSWindow, base::id};
-use objc::runtime::{NO, YES};
+use objc::runtime::YES;
 use patch_window::macos::ToolbarThickness;
 use serde::{Deserialize, Serialize};
-use tauri::{command, AppHandle, Manager, Menu, WindowBuilder, WindowUrl};
+use tauri::{AppHandle, Manager, WindowBuilder, WindowUrl};
 use url::Url;
-use window_vibrancy::{apply_blur, apply_vibrancy, NSVisualEffectMaterial, NSVisualEffectState};
+use window_vibrancy::{apply_acrylic, apply_vibrancy, NSVisualEffectMaterial, NSVisualEffectState};
 
 #[cfg(target_os = "macos")]
 use crate::patch_window::PatchWindow;
