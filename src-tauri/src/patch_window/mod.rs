@@ -12,6 +12,7 @@ pub trait PatchWindow {
   fn apply_toolbar(&self, tickness: ToolbarThickness);
 }
 
+#[cfg(target_os = "macos")]
 impl PatchWindow for TauriWindow {
   #[cfg(target_os = "macos")]
   fn apply_toolbar(&self, tickness: ToolbarThickness) {

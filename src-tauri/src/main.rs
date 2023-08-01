@@ -76,7 +76,11 @@ fn main() {
 
       app.windows().iter().for_each(|(_, window)| {
         #[cfg(target_os = "windows")]
-        window.set_decorations(true).unwrap();
+        {
+          window.set_decorations(true).unwrap();
+          apply_acrylic(&window, Some((18, 18, 18, 125)))
+            .expect("Unsupported platform! 'apply_blur' is only supported on Windows");
+        }
 
         #[cfg(target_os = "macos")]
         {
@@ -90,10 +94,6 @@ fn main() {
           .expect("Unsupported platform! 'apply_vibrancy' is only supported on macOS");
         }
       });
-
-      #[cfg(target_os = "windows")]
-      apply_acrylic(&window, Some((18, 18, 18, 125)))
-        .expect("Unsupported platform! 'apply_blur' is only supported on Windows");
 
       Ok(())
     })
